@@ -39,8 +39,11 @@
 
 
 <script>
+import AlertDanger from "@/components/alert/AlertDanger.vue";
+
 export default {
-  name: "StudentRegisterView"
+  name: "StudentRegisterView",
+  components: {AlertDanger}
 }
 </script>
 

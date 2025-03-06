@@ -39,7 +39,10 @@
 
 <script>
 
+import AlertDanger from "@/components/alert/AlertDanger.vue";
+
 export default {
-  name: 'LoginView'
+  name: 'LoginView',
+  components: {AlertDanger}
 }
 </script>
