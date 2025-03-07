@@ -70,7 +70,7 @@ export default {
     },
 
     navigateToStudentRegisterView() {
-
+      NavigationService.navigateToStudentRegisterView()
     },
 
     login() {
@@ -94,14 +94,12 @@ export default {
       this.loginResponse = response.data
       this.updateSessionStorageWithUserDetails()
       if (this.loginResponse.roleName === 'admin') {
-        // todo: mingi siia midagi teha
+        NavigationService.navigateToAdminView()
       } else if (this.loginResponse.roleName === 'student') {
         NavigationService.navigateToStudentProfileView()
-      } else{
-        alert("company")
-        NavigationService.navigateToCompanyView()
-      }
-    },
+      } else if (this.loginResponse.roleName === 'company') {
+        NavigationService.navigateToCompanyProfileView() }
+      },
 
     updateSessionStorageWithUserDetails() {
       sessionStorage.setItem('userId', this.loginResponse.userId)

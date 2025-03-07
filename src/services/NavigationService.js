@@ -10,6 +10,10 @@ export default {
         router.push({name: 'loginRoute'})
     },
 
+    navigateToAdminView() {
+        router.push({name: 'adminViewRoute'})
+    },
+
     navigateToStudentRegisterView () {
         router.push({name: 'studentRegisterRoute'})
     },
@@ -20,6 +24,10 @@ export default {
 
     navigateToCompanyRegisterView () {
         router.push({name: 'companyRegisterRoute'})
+    },
+
+    navigateToCompanyProfileView () {
+        router.push({name: 'companyProfileRoute'})
     },
 
     navigateToCompanyView() {
