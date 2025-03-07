@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
 import StudentRegisterView from "@/views/StudentRegisterView.vue";
 import CompanyRegisterView from "@/views/CompanyRegisterView.vue";
-import CompanyView from "@/views/CompanyProfileView.vue";
 import AdminView from "@/views/AdminView.vue";
 import StudentProfileView from "@/views/StudentProfileView.vue";
 import CompanyProfileView from "@/views/CompanyProfileView.vue";

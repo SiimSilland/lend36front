@@ -4,15 +4,7 @@
     <HelloWorld msg="Kohutmispaik Vali-IT õppuritele ja ettevõtetele"/>
   </div>
 
-  <div class="col">
-    <h2>Mingi tekst</h2>
-
-  </div>
 </template>
-
-
-
-
 
 
 <script>
