@@ -30,7 +30,7 @@ export default {
         router.push({name: 'companyProfileRoute'})
     },
 
-    navigateToCompanyView() {
+    navigateToCompanyLanding() {
         router.push({name: 'companyRoute'})
     },
 

@@ -67,7 +67,7 @@ export default {
         this.errorMessage = "Paroolid ei kattu"
       } else {
         UserService.sendPostNewStudentRequest(this.newStudent)
-            .then(() => NavigationService.navigateToStudentView)
+            .then(() => NavigationService.navigateToStudentProfileView)
       }
 
     }

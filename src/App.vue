@@ -1,7 +1,7 @@
 <template>
   <nav>
-    <router-link to="/ettevõttele">Ettevõttele</router-link> |
-    <router-link to="/oppur/login">Õppurile</router-link> |
+    <router-link to="/company">Ettevõttele</router-link> |
+    <router-link to="/student/register">Õppurile</router-link> |
     <router-link to="/blog">Blogi ja portfoliod</router-link> |
     <router-link to="/login">Login</router-link>
   </nav>

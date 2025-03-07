@@ -7,6 +7,7 @@ import CompanyView from "@/views/CompanyProfileView.vue";
 import AdminView from "@/views/AdminView.vue";
 import StudentProfileView from "@/views/StudentProfileView.vue";
 import CompanyProfileView from "@/views/CompanyProfileView.vue";
+import CompanyLanding from "@/views/CompanyLanding.vue";
 
 const routes = [
   {
@@ -52,7 +53,7 @@ const routes = [
   {
     path: '/company',
     name: 'companyRoute',
-    component: CompanyView
+    component: CompanyLanding
   },
 
   {
