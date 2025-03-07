@@ -30,7 +30,6 @@
 
 
           <button @click="addNewStudent" type="submit" class="btn btn-outline-success">Registreeri</button>
-
         </div>
       </div>
     </div>
@@ -40,13 +39,41 @@
 
 <script>
 import AlertDanger from "@/components/alert/AlertDanger.vue";
+import UserService from "@/services/UserService";
+import NavigationService from "@/services/NavigationService";
 
 export default {
   name: "StudentRegisterView",
-  components: {AlertDanger}
+  components: {AlertDanger},
+
+  data() {
+    return {
+      errorMessage: '',
+      passwordRetype: '',
+      newStudent: {
+        email: '',
+        password: ''
+      },
+    }
+  },
+  methods: {
+
+    passwordNoMatch() {
+      return this.passwordRetype !== this.newStudent.password;
+    },
+
+    addNewStudent() {
+      if (this.passwordNoMatch()) {
+        this.errorMessage = "Paroolid ei kattu"
+      } else {
+        UserService.sendPostNewStudentRequest(this.newStudent)
+            .then(() => NavigationService.navigateToStudentView)
+      }
+
+    }
+  }
 }
 </script>
-
 
 
 <style scoped>

@@ -5,7 +5,7 @@
   </div>
 
   <div class="col">
-    <h2></h2>
+    <h2>Mingi tekst</h2>
 
   </div>
 </template>

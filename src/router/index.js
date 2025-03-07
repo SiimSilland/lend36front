@@ -3,6 +3,10 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
 import StudentRegisterView from "@/views/StudentRegisterView.vue";
 import CompanyRegisterView from "@/views/CompanyRegisterView.vue";
+import CompanyView from "@/views/CompanyProfileView.vue";
+import AdminView from "@/views/AdminView.vue";
+import StudentProfileView from "@/views/StudentProfileView.vue";
+import CompanyProfileView from "@/views/CompanyProfileView.vue";
 
 const routes = [
   {
@@ -18,15 +22,37 @@ const routes = [
   },
 
   {
+    path: '/admin',
+    name: 'adminRoute',
+    component: AdminView
+  },
+
+  {
     path: '/student/register',
     name: 'studentRegisterRoute',
     component: StudentRegisterView
+  },
+  {
+    path: '/student/profile',
+    name: 'studentProfileRoute',
+    component: StudentProfileView
   },
 
   {
     path: '/company/register',
     name: 'companyRegisterRoute',
     component: CompanyRegisterView
+  },
+  {
+    path: '/company/profile',
+    name: 'companyProfileRoute',
+    component: CompanyProfileView
+  },
+
+  {
+    path: '/company',
+    name: 'companyRoute',
+    component: CompanyView
   },
 
   {

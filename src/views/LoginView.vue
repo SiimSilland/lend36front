@@ -28,7 +28,8 @@
         </div>
       </div>
 
-      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary">Registreeri ettevõte</button>
+      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary">Registreeri ettevõte
+      </button>
       <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary">Registreeri õppur</button>
 
       <div>
@@ -42,17 +43,20 @@
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import LoginService from "@/services/LoginService";
 import {HttpStatusCode} from "axios";
+import NavigationService from "@/services/NavigationService";
 
 export default {
   name: 'LoginView',
   components: {AlertDanger},
+
   data() {
     return {
-      email:'',
-      password:'',
+      message: '',
+      email: '',
+      password: '',
       loginResponse: {
         userId: 0,
-        role: '', // Kas rolli on vaja?
+        roleName: ''
       },
       errorResponse: {
         message: '',
@@ -61,18 +65,26 @@ export default {
     }
   },
   methods: {
-    login () {
+    navigateToCompanyRegisterView() {
+      NavigationService.navigateToCompanyRegisterView()
+    },
+
+    navigateToStudentRegisterView() {
+
+    },
+
+    login() {
       if (this.allFieldsAreWithCorrectInput()) {
         this.sendLoginRequest();
-        } else {
+      } else {
         this.alertMissingFields();
       }
     },
-    allFieldsAreWithCorrectInput () {
-      return this.email.length > 0 && this.password.lenght > 0;
+    allFieldsAreWithCorrectInput() {
+      return this.email.length > 0 && this.password.length > 0;
     },
 
-    sendLoginRequest () {
+    sendLoginRequest() {
       LoginService.sendLoginRequest(this.email, this.password)
           .then(response => this.handleLoginResponse(response))
           .catch(error => this.handleLoginErrorResponse(error))
@@ -81,13 +93,19 @@ export default {
     handleLoginResponse(response) {
       this.loginResponse = response.data
       this.updateSessionStorageWithUserDetails()
-      this.$emit(event:'event-update-nav-menu')
-      NavigationService // vastavalt kasutaja rollile kas ettevõtte või õpilase vaatesse
+      if (this.loginResponse.roleName === 'admin') {
+        // todo: mingi siia midagi teha
+      } else if (this.loginResponse.roleName === 'student') {
+        NavigationService.navigateToStudentProfileView()
+      } else{
+        alert("company")
+        NavigationService.navigateToCompanyView()
+      }
     },
 
     updateSessionStorageWithUserDetails() {
       sessionStorage.setItem('userId', this.loginResponse.userId)
-      sessionStorage.setItem(role, this.loginResponse.role)
+      sessionStorage.setItem('roleName', this.loginResponse.roleName)
     },
 
     handleLoginErrorResponse(error) {
@@ -97,19 +115,19 @@ export default {
       if (this.isIncorrectCredentials(httpStatusCode)) {
         this.handleIncorrectCredentialsAlert()
       } else {
-        NavigationServise.navigationToErrorView()
+        NavigationServise.navigationToErrorView() // Vaja teha
       }
     },
 
     isIncorrectCredentials(httpStatusCode) {
-      return HttpStatusCode.STATUS_FORBIDDEN  === httpStatusCode
-          && BusinessErrors.CODE_INCORRECT_CREDENTIALS === this.errorResponse.errorCode; // VAJA TEHA
+      return HttpStatusCode.STATUS_FORBIDDEN === httpStatusCode
+          && BusinessErrors.CODE_INCORRECT_CREDENTIALS === this.errorResponse.errorCode; // VAJA TEHA???
     },
 
-    alertMissingFields () {
+    alertMissingFields() {
       this.message = 'Täida kõik väljad'
-      setTimeout (this.resetAlertMessage // Timeoutist ei saa aru
-  },
-
-},
+      //   setTimeout (this.resetAlertMessage // Timeoutist ei saa aru
+    },
+  }
+}
 </script>

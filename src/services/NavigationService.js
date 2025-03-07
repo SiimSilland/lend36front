@@ -1,5 +1,4 @@
 import router from "@/router";
-import companyRegisterView from "@/views/CompanyRegisterView.vue";
 
 export default {
 
@@ -15,10 +14,17 @@ export default {
         router.push({name: 'studentRegisterRoute'})
     },
 
+    navigateToStudentProfileView() {
+        router.push({name: 'studentProfileRoute'})
+    },
+
     navigateToCompanyRegisterView () {
         router.push({name: 'companyRegisterRoute'})
     },
 
+    navigateToCompanyView() {
+        router.push({name: 'companyRoute'})
+    },
 
 
 }
