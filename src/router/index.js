@@ -23,7 +23,7 @@ const routes = [
 
   {
     path: '/admin',
-    name: 'adminRoute',
+    name: 'adminViewRoute',
     component: AdminView
   },
 
