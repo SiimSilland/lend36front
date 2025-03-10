@@ -62,12 +62,14 @@ export default {
       return this.passwordRetype !== this.newStudent.password;
     },
 
+    //todo: püüa kinni viga kui tudeng on juba regatud
+
     addNewStudent() {
       if (this.passwordNoMatch()) {
         this.errorMessage = "Paroolid ei kattu"
       } else {
         UserService.sendPostNewStudentRequest(this.newStudent)
-            .then(() => NavigationService.navigateToStudentProfileView)
+            .then(() => NavigationService.navigateToLoginView())
       }
 
     }
@@ -76,6 +78,3 @@ export default {
 </script>
 
 
-<style scoped>
-
-</style>
