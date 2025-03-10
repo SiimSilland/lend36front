@@ -8,11 +8,10 @@
     <div class="container text-center">
       <div class="row align-items-start">
         <div class="col">
-          EELISTUSED ASUKOHA JA PRAKTIKA ALGUSE OSAS
+          EELISTUSED ASUKOHA OSAS
         </div>
         <div class="col">
           Lühitutvustus
-          (SIIA LÜHITUTVUSTUS)
 
         </div>
         <div class="col">
@@ -21,6 +20,23 @@
       </div>
     </div>
 
+  </div>
+  <div>
+    <div class="container text-center">
+      <div class="row align-items-start">
+        <div class="col">
+          EELISTUSED PRAKTIKA ALGUSE OSAS
+        </div>
+        <div class="col">
+
+          (SIIA LÜHITUTVUSTUS)
+
+        </div>
+        <div class="col">
+          SIIA PILT JA MUUD ISIKLIKUD ANDMED
+        </div>
+      </div>
+    </div>
 
   </div>
 
