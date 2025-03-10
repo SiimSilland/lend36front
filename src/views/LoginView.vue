@@ -28,9 +28,9 @@
         </div>
       </div>
 
-      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary">Registreeri ettevõte
+      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6" >Registreeri ettevõte
       </button>
-      <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary">Registreeri õppur</button>
+      <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur</button>
 
       <div>
       </div>
@@ -65,13 +65,6 @@ export default {
     }
   },
   methods: {
-    navigateToCompanyRegisterView() {
-      NavigationService.navigateToCompanyRegisterView()
-    },
-
-    navigateToStudentRegisterView() {
-      NavigationService.navigateToStudentRegisterView()
-    },
 
     login() {
       if (this.allFieldsAreWithCorrectInput()) {
@@ -80,6 +73,7 @@ export default {
         this.alertMissingFields();
       }
     },
+
     allFieldsAreWithCorrectInput() {
       return this.email.length > 0 && this.password.length > 0;
     },
@@ -99,7 +93,20 @@ export default {
         NavigationService.navigateToStudentProfileView()
       } else if (this.loginResponse.roleName === 'company') {
         NavigationService.navigateToCompanyProfileView() }
-      },
+    },
+
+    navigateToCompanyRegisterView() {
+      NavigationService.navigateToCompanyRegisterView()
+    },
+
+    navigateToStudentRegisterView() {
+      NavigationService.navigateToStudentRegisterView()
+    },
+
+
+
+
+
 
     updateSessionStorageWithUserDetails() {
       sessionStorage.setItem('userId', this.loginResponse.userId)
