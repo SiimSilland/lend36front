@@ -95,14 +95,6 @@ export default {
         NavigationService.navigateToCompanyProfileView() }
     },
 
-    navigateToCompanyRegisterView() {
-      NavigationService.navigateToCompanyRegisterView()
-    },
-
-    navigateToStudentRegisterView() {
-      NavigationService.navigateToStudentRegisterView()
-    },
-
     updateSessionStorageWithUserDetails() {
       sessionStorage.setItem('userId', this.loginResponse.userId)
       sessionStorage.setItem('roleName', this.loginResponse.roleName)
@@ -128,6 +120,24 @@ export default {
       this.message = 'Täida kõik väljad'
       //   setTimeout (this.resetAlertMessage // Timeoutist ei saa aru
     },
+
+
+    navigateToCompanyRegisterView() {
+      NavigationService.navigateToCompanyRegisterView()
+    },
+
+    navigateToStudentRegisterView() {
+      NavigationService.navigateToStudentRegisterView()
+    },
+
+    navigateToAdminView(){
+      NavigationService.navigateToAdminView()
+    }
+
+
+
+
+
   }
 }
 </script>

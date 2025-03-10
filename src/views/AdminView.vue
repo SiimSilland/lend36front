@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col">
-      <h1>Mingi tekst ja väljad adminnile.Siia lennu registreerimine?</h1>
+      <h1>Mingi tekst ja väljad adminnile.Siia lennu registreerimine</h1>
     </div>
   </div>
 </template>
