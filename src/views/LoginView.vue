@@ -103,11 +103,6 @@ export default {
       NavigationService.navigateToStudentRegisterView()
     },
 
-
-
-
-
-
     updateSessionStorageWithUserDetails() {
       sessionStorage.setItem('userId', this.loginResponse.userId)
       sessionStorage.setItem('roleName', this.loginResponse.roleName)
