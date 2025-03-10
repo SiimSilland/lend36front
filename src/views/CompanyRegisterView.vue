@@ -3,7 +3,7 @@
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col">
-          <h1>Uue ettevõtte registreerimine</h1>
+          <h1>Uue konto registreerimine</h1>
           <AlertDanger :message="errorMessage"/>
         </div>
       </div>
@@ -12,18 +12,18 @@
         <div class="col col-3">
 
           <div class="input-group mb-3">
-            <span class="input-group-text">email</span>
+            <span class="input-group-text">Nimi</span>
             <input v-model="newCompany.name" type="text" class="form-control">
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text">email</span>
+            <span class="input-group-text">Reg.nr</span>
             <input v-model="newCompany.registrationNumber" type="text" class="form-control">
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text">email</span>
-            <input v-model="newCompany.email" type="text" class="form-control"> // KAs uus ettevõte või uus kasutaja?
+            <input v-model="newCompany.email" type="text" class="form-control">
           </div>
 
           <div class="input-group mb-3">
@@ -61,7 +61,11 @@ export default {
         name: '',
         registrationNumber: '',
         email: '',
-        password: ''
+        password: '',
+        phoneNumber:'',
+        www:'',
+        description:''
+
       },
     }
   },
@@ -78,13 +82,8 @@ export default {
             .then(() => NavigationService.navigateToCompanyProfileView)
       }
 
-    }
+    },
   }
 }
 </script>
 
-
-
-<style scoped>
-
-</style>
