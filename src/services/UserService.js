@@ -7,7 +7,7 @@ export default {
     },
 
     sendPostNewCompanyRequest(newCompany) {
-        return axios.post('/user', newCompany);
+        return axios.post('/company/register', newCompany);
     }
 
 }
