@@ -61,9 +61,7 @@ export default {
     passwordNoMatch() {
       return this.passwordRetype !== this.newStudent.password;
     },
-
     //todo: püüa kinni viga kui tudeng on juba regatud
-
     addNewStudent() {
       if (this.passwordNoMatch()) {
         this.errorMessage = "Paroolid ei kattu"

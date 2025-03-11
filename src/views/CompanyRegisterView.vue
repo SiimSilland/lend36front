@@ -63,9 +63,6 @@ export default {
         registrationNumber: '',
         email: '',
         password: '',
-        phoneNumber:'',
-        www:'',
-        description:''
 
       },
     }
