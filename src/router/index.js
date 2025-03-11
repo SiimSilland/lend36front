@@ -6,7 +6,7 @@ import CompanyRegisterView from "@/views/CompanyRegisterView.vue";
 import StudentProfileView from "@/views/StudentProfileView.vue";
 import CompanyProfileView from "@/views/CompanyProfileView.vue";
 import CompanyLanding from "@/views/CompanyLanding.vue";
-import StudentCompaniesView from "@/views/StudentCompaniesView.vue";
+import StudentCompanyListView from "@/views/StudentCompanyListView.vue";
 import CompanyCandidatesView from "@/views/CompanyCandidatesView.vue";
 import GroupView from "@/views/GroupView.vue";
 import GroupEmailView from "@/views/GroupEmailView.vue";
@@ -14,6 +14,7 @@ import GroupCompanyView from "@/views/GroupCompanyView.vue";
 import CompanyInternshipView from "@/views/CompanyInternshipView.vue";
 import CompanyStudentsView from "@/views/CompanyStudentsView.vue";
 import CompanyTaskListView from "@/views/CompanyTaskListView.vue";
+import StudentTaskView from "@/views/StudentTaskView.vue";
 
 const routes = [
     {
@@ -52,9 +53,14 @@ const routes = [
         component: StudentRegisterView
     },
     {
-        path: '/student/companies',
-        name: 'studentCompaniesRoute',
-        component: StudentCompaniesView
+        path: '/student/company-list',
+        name: 'studentCompanyListRoute',
+        component: StudentCompanyListView
+    },
+    {
+        path: '/student/task',
+        name: 'studentTaskRoute',
+        component: StudentTaskView
     },
     {
         path: '/student/profile',
