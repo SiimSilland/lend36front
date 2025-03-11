@@ -7,8 +7,8 @@
         <router-link @click="executeLogOut" to="/">Logi välja</router-link>
       </template>
       <template v-else-if="isStudent">
-        <router-link to="/task">Ettevõtete ülesanded</router-link> |
-        <router-link to="/company-list">Ettevõtete nimekiri</router-link> |
+        <router-link to="/student/task">Ettevõtete ülesanded</router-link> |
+        <router-link to="/student/company-list">Ettevõtete nimekiri</router-link> |
         <router-link to="/student/profile">Minu profiil</router-link> |
         <router-link @click="executeLogOut" to="/">Logi välja</router-link>
       </template>
