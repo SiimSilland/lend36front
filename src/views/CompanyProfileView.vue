@@ -13,9 +13,10 @@
         <div class="row">
 
           <div class="col-md-6">
+            <label for="tegevusvaldkond" class="form-label label-black-bold">Tegevusvaldkond</label>
             <div class="form-floating">
               <textarea v-model="newCompany.description" class="form-control textarea-fixed" id="tegevusvaldkond"></textarea>
-              <label for="tegevusvaldkond">Tegevusvaldkond</label>
+
             </div>
           </div>
 
@@ -56,7 +57,7 @@
         <!-- Centered Button at Bottom -->
         <div class="row mt-4">
           <div class="col text-center">
-            <button @click="addNewCompanyProfile" type="submit" class="btn btn-outline-success">
+            <button @click="addNewCompanyProfile" type="submit" class="btn btn-custom">
               Uuenda andmed
             </button>
           </div>
@@ -110,15 +111,27 @@ export default {
 
 .title {
   color: black;
+
 }
 
-/* Center button */
+.label-black-bold {
+  color: black;
+  font-weight: bold;
+}
 .btn-outline-success {
   padding: 10px 20px;
   font-size: 1.2rem;
 }
-
+.btn-custom {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 .textarea-fixed {
-  height: 100px; /* Adjust as needed */
+  height: 100px;
 }
 </style>

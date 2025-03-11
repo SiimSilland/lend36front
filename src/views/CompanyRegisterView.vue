@@ -13,7 +13,7 @@
 
           <div class="input-group mb-3">
             <span class="input-group-text">Nimi</span>
-            <input v-model="newCompany.name" type="text" class="form-control">
+            <input v-model="newCompany.companyName" type="text" class="form-control">
           </div>
 
           <div class="input-group mb-3">
