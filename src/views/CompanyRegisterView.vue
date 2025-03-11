@@ -80,7 +80,7 @@ export default {
         this.errorMessage = "Paroolid ei kattu"
       } else {
         UserService.sendPostNewCompanyRequest(this.newCompany)
-            .then(() => NavigationService.navigateToCompanyProfileView)
+            .then(() => NavigationService.navigateToLoginView())
 
       }
 
