@@ -4,32 +4,24 @@
       <div class="row justify-content-center">
         <div class="col">
           <h1>Kõik lennud</h1>
-          <table class="table table-dark table-hover">
+          <table class="table table-responsive table-hover">
             <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Lennu number</th>
+              <th scope="col">Periood</th>
+              <th scope="col">Lektori nimi</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
             <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
-              <td>@mdo</td>
             </tr>
             <tr>
               <th scope="row">2</th>
               <td>Jacob</td>
               <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
             </tr>
             </tbody>
           </table>
