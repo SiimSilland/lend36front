@@ -87,8 +87,10 @@ export default {
     handleLoginResponse(response) {
       this.loginResponse = response.data
       this.updateSessionStorageWithUserDetails()
+      this.$emit('event-update-nav-menu')
+
       if (this.loginResponse.roleName === 'admin') {
-        NavigationService.navigateToAdminView()
+        NavigationService.navigateToGroupView()
       } else if (this.loginResponse.roleName === 'student') {
         NavigationService.navigateToStudentProfileView()
       } else if (this.loginResponse.roleName === 'company') {
