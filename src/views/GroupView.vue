@@ -9,19 +9,15 @@
             <tr>
               <th scope="col">Lennu number</th>
               <th scope="col">Periood</th>
-              <th scope="col">Lektori nimi</th>
+              <th scope="col">Lektori nimi</th> <!--Kuidas teha tabeli rea lõppu muutmise, kustutamise, Lisa õppuri ikoon? -->
             </tr>
             </thead>
             <tbody class="table-group-divider">
+            <!--     alljärgnev osa dynaamiliseks for loop 'groups'pealt       -->
             <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
             </tr>
             </tbody>
           </table>
@@ -32,7 +28,43 @@
 </template>
 
 <script>
+import AddGroupModal from "@/components/modal/AddGroupModal.vue";
+import axios from "axios";
+
 export default {
-  name: 'GroupView'
+  name: 'GroupView',
+  components: {AddGroupModal},
+  data() {
+    return {
+      modalIsOpen: false,
+      isEdit: false,
+      successMessage: '',
+      errorMessage: '',
+
+      groups: [
+        {
+          groupId: 0,
+          groupNumber: 0,
+          groupPeriod: '',
+          lectorName: ''
+        }
+      ]
+    }
+  },
+  methods:{
+    getGroups() {
+      axios.get('/groups')
+          .then(response => {
+            this.groups = response.data
+          })
+          .catch(error => {
+            this.someDataBlockErrorResponseObject = error.response.data
+          })
+    },
+  },
+  beforeMount() {
+    this.getGroups()
+  }
+
 }
 </script>

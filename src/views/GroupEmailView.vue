@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  name: "GroupEmailView"
+  name: 'GroupEmailView',
 }
 </script>
