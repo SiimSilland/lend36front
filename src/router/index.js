@@ -42,7 +42,11 @@ const routes = [
   {
     path: '/student',
     name: 'studentProfileRoute',
-    component: StudentProfileView
+    component: StudentProfileView,
+    meta:{
+      requiresAuth: true,
+      requiresRole: 'student'
+    }
   },
 
   {
@@ -83,5 +87,23 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (!to.matched.some(record => record.meta.requiresAith)) {
+    return;
+  }
+  const userId = sessionStorage.getItem('userId')
+  const roleName = sessionStorage.getItem('roleName')
+  if (!userId) {
+    next({name: 'login'})
+  } else if (to.meta.requiredRole && to.meta.requiredRole !== roleName) {
+    next({name: 'home'})
+  } else {
+    next()
+  }
+  {
+    next()
+  }
+} )
 
 export default router
