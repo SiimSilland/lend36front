@@ -1,4 +1,5 @@
 <template>
+ <div v-if="isStudent">
   <div class="row">
     <div class="col">
       <h1>SIIA ÕPILASE NIMI!</h1>
@@ -39,13 +40,46 @@
     </div>
 
   </div>
+ </div>
+  <div v-else class="unauthorized-message">
+    <h2> Juuredepääs keelatud </h2>
+    <p>Teil pole selle lehe vaatamiseks õiguse.</p>
+
+
+  </div>
 
 </template>
 
 
 <script>
 export default {
-  name: 'StudentProfileView'
+  name: 'StudentProfileView',
+
+  data() {
+    return {
+      isStudent: false
+    }
+
+  },
+
+  mounted(){
+    this.checkUserRole()
+  },
+
+  methods:{
+    checkUserRole(){
+      const roleName = sessionStorage.getItem('roleName')
+      this.isStudent = roleName === 'student'
+
+      if (!this.isStudent){
+        setTimeout(() => {
+          this.$router.push('/')
+        }, 2000)
+
+      }
+    }
+  }
 }
+
 </script>
 

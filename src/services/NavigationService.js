@@ -3,15 +3,15 @@ import router from "@/router";
 export default {
 
     navigateToHomeView() {
-        router.push({name: 'home'})
+        router.push({name: 'homeRoute'})
     },
 
     navigateToLoginView() {
         router.push({name: 'loginRoute'})
     },
 
-    navigateToAdminView() {
-        router.push({name: 'adminViewRoute'})
+    navigateToGroupView() {
+        router.push({name: 'groupRoute'})
     },
 
     navigateToStudentRegisterView () {

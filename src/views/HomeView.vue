@@ -1,20 +1,12 @@
 <template>
   <div class="home">
     <img src="../assets/valiIT_logo.png">
-    <HelloWorld msg="Kohutmispaik Vali-IT õppuritele ja ettevõtetele"/>
+    <h1>Kohutmispaik Vali-IT õppuritele ja ettevõtetele</h1>
   </div>
-
 </template>
 
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+  name: 'HomeView'
 }
 </script>
