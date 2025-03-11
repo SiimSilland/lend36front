@@ -1,24 +1,28 @@
 <template>
   <nav>
     <template v-if="isAdmin">
-    <router-link to="/sudent/register">Õppurid</router-link> |
-    <router-link to="/student/companies">Ettevõtted</router-link> |
+    <router-link to="/lennud">Lennud</router-link> |
+    <router-link to="/students">Õppurid</router-link> |
+    <router-link to="/company">Ettevõtted</router-link> |
     <router-link @click="executeLogOut" to="/">Logi välja</router-link>
     </template>
     <template v-else-if="isStudent">
-    <router-link to="/companies">Ettevõtete ülesanded</router-link> |
-    <router-link to="/companies">Ettevõtted</router-link> |
+    <router-link to="/task">Ettevõtete ülesanded</router-link> |
+    <router-link to="/company-list">Ettevõtete nimekiri</router-link> |
+      <router-link to="/profile">Minu profiil</router-link> |
     <router-link @click="executeLogOut" to="/">Logi välja</router-link>
     </template>
     <template v-else-if="isCompany">
-    <router-link to="/company">Lisa koodi ülesanne</router-link> |
-    <router-link to="/student/">Praktikantide CV'd</router-link> |
+    <router-link to="/task-list">koodiülesanded</router-link> |
+    <router-link to="/students">Praktikantide CV'd</router-link> |
+    <router-link to="/internship">Praktika võimalused</router-link> ||
+    <router-link to="/profile">Ettevõtte profiil</router-link> |
     <router-link @click="executeLogOut" to="/">Logi välja</router-link>
     </template>
     <template v-else>
     <router-link to="/company">Ettevõttele</router-link> |
     <router-link to="/student/register">Õppurile</router-link> |
-    <router-link to="/blog">Plogi</router-link> |
+    <router-link to="/blog">Blogi</router-link> |
     <router-link to="/login">Logi sisse</router-link>
     </template>
   </nav>
@@ -43,6 +47,10 @@ export default {
     }
   },
 
+  mounted(){
+    this.updateNavMenu()
+  },
+
   methods:{
 
     executeLogOut(){
@@ -62,22 +70,6 @@ export default {
 
     }
 
-
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>

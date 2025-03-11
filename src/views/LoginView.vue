@@ -130,12 +130,6 @@ export default {
       NavigationService.navigateToStudentRegisterView()
     },
 
-    navigateToAdminView(){
-      NavigationService.navigateToAdminView()
-    }
-
-
-
 
 
   }

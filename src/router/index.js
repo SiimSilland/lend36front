@@ -40,7 +40,7 @@ const routes = [
     component: StudentCompaniesView
   },
   {
-    path: '/student/profile',
+    path: '/student',
     name: 'studentProfileRoute',
     component: StudentProfileView
   },
