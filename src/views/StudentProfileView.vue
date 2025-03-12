@@ -13,15 +13,12 @@
           </div>
           <div class="col">
             Lühitutvustus
-
           </div>
           <div class="col">
             PILT
-
           </div>
         </div>
       </div>
-
     </div>
     <div>
       <div class="container text-center">
@@ -30,21 +27,12 @@
             <h5>EELISTUSED PRAKTIKA ALGUSE OSAS</h5>
           </div>
           <div class="col">
-
             (SIIA LÜHITUTVUSTUS)
-
           </div>
           <div class="col">
             <h3>MUUD ISIKLIKUD ANDMED</h3>
-            <ul class="list-group list-group-horizontal">
-              <li class="list-group-item">Aadress </li>
-              <li class="list-group-item">
-                {{studentProfile.address}}
-              </li>
-
-            </ul>
-            <h3> PROOVIKAS teise põhja jaoks </h3>
-
+            <StudentProfileTable/>
+            <h3> <button type="button" class="btn btn-outline-primary">Lisa CV</button> </h3>
           </div>
         </div>
       </div>
@@ -54,19 +42,21 @@
   <div v-else class="unauthorized-message">
     <h2> Juuredepääs keelatud </h2>
     <p>Teil pole selle lehe vaatamiseks õiguse.</p>
-
-
   </div>
-
 </template>
-
-
 <script>
 
 import axios from "axios";
+import StudentProfileTable from "@/components/StudenProfile/StudentProfileTable.vue";
+import StudentProfileService from "@/services/StudentProfileService";
 
 export default {
   name: 'StudentProfileView',
+  components: {StudentProfileTable},
+  props:{
+    isStudent: Boolean,
+
+  },
 
   data() {
     return {
@@ -74,28 +64,20 @@ export default {
 
       studentProfile: {
         firstName: '',
-        lastName: '',
-        address: '',
-        phone: '',
-        linkedin: '',
-        email: ''
-      },
-      error: null
+        lastName: ''
+      }
 
     }
-
   },
 
   mounted() {
-    this.checkUserRole();
-    if (this.isStudent)
-    {
-      this.fetchStudentProfile();
+    const userId = this.getUserId();
+    if (userId){
+      this.fetchStudentProfile()
     }
   },
 
   methods: {
-    //todo: pildi lisamine
 
     checkUserRole() {
       const roleName = sessionStorage.getItem('roleName')
@@ -109,31 +91,17 @@ export default {
       }
     },
 
-    fetchStudentProfile() {
-      const userId = sessionStorage.getItem('userId');
-      if (!userId) {
-        this.error = 'User ID not found in session';
-      }
-      axios.get('/student/profile/get', {
-        params: {
-          userId: userId
-        }
-      })
-          .then(response => {
-            this.studentProfile = response.data;
-          })
-          .catch(error => {
-            console.error('Error fetching student profile: ', error);
-            this.error = 'Failed to load student profile';
-          })
-
+    getUserId(){
+      return sessionStorage.getItem('userId');
     },
 
-    // todo: miks beforeMount ei rakendu?
-    beforeMount() {
-      this.checkUserRole();
+    fetchStudentProfile(userId){
+      return  StudentProfileService.fetchStudentProfile('userId');
     }
 
+  },
+  beforeMount() {
+    this.checkUserRole();
   }
 }
 
