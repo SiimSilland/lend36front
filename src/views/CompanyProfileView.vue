@@ -4,7 +4,7 @@
       <div class="container text-center">
         <div class="row justify-content-center">
           <div class="col-12">
-            <h1 class="title">Ettevõtte registreerimine</h1>
+            <h1 class="title">Ettevõtte profiil</h1>
           </div>
         </div>
       </div>
@@ -53,9 +53,7 @@
             </div>
           </div>
         </div>
-
-        <!-- Centered Button at Bottom -->
-        <div class="row mt-4">
+           <div class="row mt-4">
           <div class="col text-center">
             <button @click="addNewCompanyProfile" type="submit" class="btn btn-custom">
               Uuenda andmed
@@ -70,13 +68,14 @@
 <script>
 import UserService from "@/services/UserService";
 import NavigationService from "@/services/NavigationService";
-import {useRoute} from "vue-router";
+import CompanyService from "@/services/CompanyService";
+
 
 export default {
   name: "CompanyProfileView",
   data() {
     return {
-      userId: Number(useRoute().params.userId),
+
       newCompany: {
         companyName: '',
         registrationNumber: '',
@@ -90,7 +89,7 @@ export default {
   },
   methods: {
     addNewCompanyProfile() {
-      UserService.sendPostNewCompanyProfileRequest(this.userId, this.newCompany)
+      CompanyService.sendPutNewCompanyProfileRequest(this.newCompany)
           .then(() => NavigationService.navigateToLoginView())
           .catch(error => console.error("Error updating company profile:", error));
     }
@@ -119,10 +118,7 @@ export default {
 .label-black-bold {
   color: black;
   font-weight: bold;
-}
-.btn-outline-success {
-  padding: 10px 20px;
-  font-size: 1.2rem;
+
 }
 .btn-custom {
   background-color: yellow;

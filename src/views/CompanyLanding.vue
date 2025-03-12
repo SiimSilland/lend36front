@@ -67,11 +67,7 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col text-box">
-            <h4 class="title">Viimased blogipostitused ja portfolio uuendused</h4>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>
