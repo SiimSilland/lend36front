@@ -115,7 +115,7 @@ export default {
 
     isIncorrectCredentials(httpStatusCode) {
       return HttpStatusCode.STATUS_FORBIDDEN === httpStatusCode
-          && BusinessErrors.CODE_INCORRECT_CREDENTIALS === this.errorResponse.errorCode; // VAJA TEHA???
+          && BusinessErrors.CODE_INCORRECT_CREDENTIALS === this.errorResponse.errorCode;
     },
 
     alertMissingFields() {
