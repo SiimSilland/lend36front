@@ -2,6 +2,9 @@ import router from "@/router";
 
 export default {
 
+    navigateToErrorView() {
+        // router.push({name: 'errorRoute'})
+    },
     navigateToHomeView() {
         router.push({name: 'homeRoute'})
     },
@@ -14,8 +17,8 @@ export default {
         router.push({name: 'groupRoute'})
     },
 
-    navigateToGroupEmailView() {
-        router.push({name: 'groupEmailRoute'})
+    navigateToGroupEmailView(groupId) {
+        router.push({name: 'groupEmailRoute', query:{groupId:groupId}})
     },
 
     navigateToStudentRegisterView () {

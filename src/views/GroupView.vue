@@ -21,12 +21,16 @@
               <td>{{group.lectorName}}</td>
               <td><button class="btn btn-warning btn-sm" @click="editGroup(group)"><i class="fas fa-edit"></i>Muuda</button>
                 <button class="btn btn-danger btn-sm" @click="deleteGroup(group)"><i class="fas fa-trash"></i> Kustuta</button>
-                <button class="btn btn-danger btn-sm" @click="addGroupEmail(group)"><i class="fas fa-plus"></i> Lisa õppur</button>
+                <button class="btn btn-success btn-sm" @click="navigateToGroupEmailView(group.groupId)"><i class="fas fa-plus"></i> Lisa õppur</button>
               </td>
             </tr>
             </tbody>
           </table>
         </div>
+
+      </div>
+      <div class="col">
+        <button @click="addGroup" type="submit" class="btn btn-outline-success">Lisa lend</button>
       </div>
     </div>
   </div>
@@ -35,6 +39,7 @@
 <script>
 import AddGroupModal from "@/components/modal/AddGroupModal.vue";
 import axios from "axios";
+import NavigationService from "@/services/NavigationService";
 
 export default {
   name: 'GroupView',
@@ -57,6 +62,11 @@ export default {
     }
   },
   methods:{
+
+    navigateToGroupEmailView(groupId) {
+      NavigationService.navigateToGroupEmailView(groupId)
+    },
+
     getGroups() {
       axios.get('/groups')
           .then(response => {
@@ -66,10 +76,15 @@ export default {
             this.someDataBlockErrorResponseObject = error.response.data
           })
     },
+    validateIsAdmin() {
+      const roleName = sessionStorage.getItem('roleName')
+      this.IsAdmin = roleName != null && roleName === 'admin'
+    },
   },
+
   beforeMount() {
+    this.validateIsAdmin()
     this.getGroups()
   }
-
 }
 </script>
