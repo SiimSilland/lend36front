@@ -10,7 +10,7 @@
               <th scope="col">Lennu number</th>
               <th scope="col">Periood</th>
               <th scope="col">Lektori nimi</th>
-              <!--Kuidas teha tabeli rea lõppu muutmise, kustutamise, Lisa õppuri ikoon? -->
+              <th scope="col">Tegevused</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -19,6 +19,10 @@
               <th scope="row">{{group.groupNumber}}</th>
               <td>{{ group.groupPeriod }}</td>
               <td>{{group.lectorName}}</td>
+              <td><button class="btn btn-warning btn-sm" @click="editGroup(group)"><i class="fas fa-edit"></i>Muuda</button>
+                <button class="btn btn-danger btn-sm" @click="deleteGroup(group)"><i class="fas fa-trash"></i> Kustuta</button>
+                <button class="btn btn-danger btn-sm" @click="addGroupEmail(group)"><i class="fas fa-plus"></i> Lisa õppur</button>
+              </td>
             </tr>
             </tbody>
           </table>
