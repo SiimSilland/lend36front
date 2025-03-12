@@ -91,7 +91,7 @@ export default {
     addNewCompanyProfile() {
       CompanyService.sendPutNewCompanyProfileRequest(this.newCompany)
           .then(() => NavigationService.navigateToLoginView())
-          .catch(error => console.error("Error updating company profile:", error));
+
     }
   }
 };

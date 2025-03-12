@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import UserService from "@/services/UserService";
+
 import NavigationService from "@/services/NavigationService";
 import CompanyService from "@/services/CompanyService";
 
