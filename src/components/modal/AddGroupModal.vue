@@ -34,6 +34,7 @@
 <script>
 import GroupService from "@/services/GroupService";
 import Modal from "@/components/modal/Modal.vue";
+import NavigationService from "@/services/NavigationService";
 
 export default {
   name: 'AddGroupModal',

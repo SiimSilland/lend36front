@@ -9,7 +9,8 @@
             <tr>
               <th scope="col">Lennu number</th>
               <th scope="col">Periood</th>
-              <th scope="col">Lektori nimi</th> <!--Kuidas teha tabeli rea lõppu muutmise, kustutamise, Lisa õppuri ikoon? -->
+              <th scope="col">Lektori nimi</th>
+              <!--Kuidas teha tabeli rea lõppu muutmise, kustutamise, Lisa õppuri ikoon? -->
             </tr>
             </thead>
             <tbody class="table-group-divider">
