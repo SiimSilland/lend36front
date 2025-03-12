@@ -68,6 +68,7 @@
 <script>
 import UserService from "@/services/UserService";
 import NavigationService from "@/services/NavigationService";
+import CompanyService from "@/services/CompanyService";
 
 
 export default {
@@ -88,7 +89,7 @@ export default {
   },
   methods: {
     addNewCompanyProfile() {
-      UserService.sendPostNewCompanyProfileRequest(this.newCompany)
+      CompanyService.sendPutNewCompanyProfileRequest(this.newCompany)
           .then(() => NavigationService.navigateToLoginView())
           .catch(error => console.error("Error updating company profile:", error));
     }

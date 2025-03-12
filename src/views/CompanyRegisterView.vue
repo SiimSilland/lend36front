@@ -49,6 +49,7 @@
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import UserService from "@/services/UserService";
 import NavigationService from "@/services/NavigationService";
+import CompanyService from "@/services/CompanyService";
 
 export default {
   name: "CompanyRegisterView",
@@ -75,7 +76,7 @@ export default {
       if (this.passwordNoMatch()) {
         this.errorMessage = "Paroolid ei kattu"
       } else {
-        UserService.sendPostNewCompanyRequest(this.newCompany)
+        CompanyService.sendPostNewCompanyRequest(this.newCompany)
             .then(() => NavigationService.navigateToLoginView())
 
       }

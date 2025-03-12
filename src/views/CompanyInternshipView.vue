@@ -6,67 +6,29 @@
           <div class="row justify-content-center">
             <h1 class="title">Praktikavõimalused</h1>
 
-            <form action="/action_page.php" style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon </label>
-              <input type="text" id="position" name="position" style="vertical-align: top;">
-
+            agenda
+            <form style="display: flex; align-items: flex-start; gap: 10px;">
+              <label for="position">Positsioon</label>
+              <input v-model="newInternship.title" type="text" style="vertical-align: top;" />
               <label for="description">Kirjeldus</label>
-              <textarea id="description" name="description" class="long-input" style="vertical-align: top;"></textarea>
+              <input v-model="newInternship.description" type="text" style="vertical-align: top;" />
             </form>
-
-            <form action="/action_page.php" style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon </label>
-              <input type="text" id="position" name="position" style="vertical-align: top;">
-
-              <label for="description">Kirjeldus</label>
-              <textarea id="description" name="description" class="long-input" style="vertical-align: top;"></textarea>
-            </form>
-            <form action="/action_page.php" style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon </label>
-              <input type="text" id="position" name="position" style="vertical-align: top;">
-
-              <label for="description">Kirjeldus</label>
-              <textarea id="description" name="description" class="long-input" style="vertical-align: top;"></textarea>
-            </form>
-            <form action="/action_page.php" style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon </label>
-              <input type="text" id="position" name="position" style="vertical-align: top;">
-
-              <label for="description">Kirjeldus</label>
-              <textarea id="description" name="description" class="long-input" style="vertical-align: top;"></textarea>
-            </form>
-            <form action="/action_page.php" style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon </label>
-              <input type="text" id="position" name="position" style="vertical-align: top;">
-
-              <label for="description">Kirjeldus</label>
-              <textarea id="description" name="description" class="long-input" style="vertical-align: top;"></textarea>
-            </form>
-
-
 
             <div class="spacer"></div>
 
             <h3 class="title">Praktikakoordinaator</h3>
 
-            <form action="/action_page.php">
-              <div class="form-group">
-                <input type="text" id="name" name="name">
-                <label for="name">Nimi</label>
-              </div>
+            <div class="form-group">
+              <input v-model="newInternship.name" id="name" name="name" />
+              <label for="name">Nimi</label>
+            </div>
 
-              <div class="form-group">
-                <input type="text" id="phone" name="phone">
-                <label for="phone">Telefon</label>
-              </div>
+            <div class="form-group">
+              <input v-model="newInternship.email" id="email" name="email" />
+              <label for="email">Email</label>
+            </div>
 
-              <div class="form-group">
-                <input type="text" id="email" name="email">
-                <label for="email">Email</label>
-              </div>
-
-              <input type="submit" value="Submit">
-            </form>
+            <button @click.prevent="addNewInternship" class="btn btn-outline-success">Uuenda</button>
           </div>
         </div>
       </div>
@@ -75,14 +37,35 @@
 </template>
 
 <script>
+import UserService from "@/services/UserService";
+import NavigationService from "@/services/NavigationService";
+import CompanyService from "@/services/CompanyService";
+
 export default {
-  name: "CompanyInternshipView"
-}
+  name: "CompanyInternshipView",
+  data() {
+    return {
+      newInternship: {
+        title: '',
+        description: '',
+        name: '',
+        email: ''
+      }
+    };
+  },
+  methods: {
+    addNewInternship() {
+      CompanyService.sendPostNewInternshipRequest(this.newInternship)
+          .then(() => NavigationService.navigateToLoginView())
+
+    }
+  }
+};
 </script>
 
 <style scoped>
 .background {
-  background-image: url('@/assets/img.png');
+  background-image: url("@/assets/img.png");
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -101,18 +84,9 @@ label {
   color: black;
 }
 
-input, textarea {
+input,
+textarea {
   color: black;
-}
-
-.short-input {
-  width: 150px;
-  height: 60px; /* Allow multiline input */
-}
-
-.long-input {
-  width: 600px;
-  height: 30px; /* Allow multiline input */
 }
 
 .form-group {
@@ -122,7 +96,6 @@ input, textarea {
   margin-bottom: 10px;
 }
 
-/* Added space before "Praktikakoordinaator" */
 .spacer {
   margin-top: 30px;
 }
