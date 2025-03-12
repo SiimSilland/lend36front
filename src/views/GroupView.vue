@@ -21,7 +21,7 @@
               <td>{{group.lectorName}}</td>
               <td><button class="btn btn-warning btn-sm" @click="editGroup(group)"><i class="fas fa-edit"></i>Muuda</button>
                 <button class="btn btn-danger btn-sm" @click="deleteGroup(group)"><i class="fas fa-trash"></i> Kustuta</button>
-                <button class="btn btn-danger btn-sm" @click="addGroupEmail(group)"><i class="fas fa-plus"></i> Lisa õppur</button>
+                <button class="btn btn-success btn-sm" @click="addGroupEmail(group)"><i class="fas fa-plus"></i> Lisa õppur</button>
               </td>
             </tr>
             </tbody>
