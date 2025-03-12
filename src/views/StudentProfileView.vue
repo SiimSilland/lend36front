@@ -32,12 +32,21 @@
           <div class="col">
             <h3>MUUD ISIKLIKUD ANDMED</h3>
             <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
-              @event-email-changed="setStudentProfileEmail"
+                                     @event-address-changed="setStudentProfileAddress"
+                                     @event-phone-changed="setStudentProfilePhone"
+                                     @event-email-changed="setStudentProfileEmail"
+                                     @event-linkedin-changed="setStudentProfileLinkedin"
+
+
             />
             <StudentProfileTable v-else :student-profile="studentProfile"/>
             <h3>
               <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
               </button>
+
+              <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
+              </button>
+
               <button type="button" class="btn btn-outline-primary">Lisa CV</button>
             </h3>
           </div>
@@ -58,6 +67,7 @@ import StudentProfileService from "@/services/StudentProfileService";
 import NavigationService from "@/services/NavigationService";
 import axios from "axios";
 import StudentEditProfileTable from "@/components/StudenProfile/StudentEditProfileTable.vue";
+import {useId} from "vue";
 
 export default {
   name: 'StudentProfileView',
@@ -85,23 +95,48 @@ export default {
     }
   },
   methods: {
+
+    setStudentProfileAddress(address){
+      this.studentProfile.address = address
+    },
+    setStudentProfilePhone(phone){
+      this.studentProfile.phone = phone
+    },
     setStudentProfileEmail(email) {
       this.studentProfile.email = email
+    },
+    setStudentProfileLinkedin(linkedin) {
+      this.studentProfile.linkedin = linkedin
     },
 
     startEdit() {
       this.isEditMode = true
     },
-
-    getStudentProfile() {
-      StudentProfileService.sendGetStudentProfile(this.userId)
-          .then(response => this.studentProfile = response.data)
-          .catch(() => NavigationService.navigateToErrorView());
+    async saveEdit() {
+      try {
+        const response = await StudentProfileService.updateStudentProfile(this.userId, this.studentProfile);
+        this.studentProfile = { ...response.data }; // Spread operator to ensure reactivity
+        this.isEditMode = false;
+      } catch (error) {
+        console.error('Error saving profile: ', error);
+        alert('Profiili salvestamisel tekkis viga');
+      }
     },
+    async getStudentProfile() {
+      try {
+        const response = await StudentProfileService.sendGetStudentProfile(this.userId);
+        this.studentProfile = { ...response.data }; // Spread operator to ensure reactivity
+      } catch (error) {
+        NavigationService.navigateToErrorView();
+      }
+    }
   },
-  beforeMount() {
-    this.getStudentProfile()
+  async created() {  // Changed from beforeMount to created
+    await this.getStudentProfile();
   }
+
+
+
 }
 
 </script>
