@@ -49,7 +49,6 @@
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import UserService from "@/services/UserService";
 import NavigationService from "@/services/NavigationService";
-import axios from "axios";
 
 export default {
   name: "CompanyRegisterView",
