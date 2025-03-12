@@ -64,7 +64,11 @@ export default {
 
       studentProfile: {
         firstName: '',
-        lastName: ''
+        lastName: '',
+        address: '',
+        phone: '',
+        linkedin: '',
+        email: ''
       }
 
     }
@@ -73,7 +77,7 @@ export default {
   mounted() {
     const userId = this.getUserId();
     if (userId){
-      this.fetchStudentProfile()
+      this.fetchStudentProfile(userId)
     }
   },
 
@@ -95,8 +99,13 @@ export default {
       return sessionStorage.getItem('userId');
     },
 
-    fetchStudentProfile(){
-      return  StudentProfileService.sendGetStudentProfile('userId');
+    fetchStudentProfile(userId){
+      return  StudentProfileService.sendGetStudentProfile(userId)
+      .then((response)=> {
+        this.studentProfile = response.data;})
+          .catch((error)=> {
+            console.error("Failed to fetch student profile: ", error);
+          })
     }
 
   },
