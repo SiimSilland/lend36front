@@ -14,6 +14,10 @@ export default {
         router.push({name: 'groupRoute'})
     },
 
+    navigateToGroupEmailView() {
+        router.push({name: 'groupEmailRoute'})
+    },
+
     navigateToStudentRegisterView () {
         router.push({name: 'studentRegisterRoute'})
     },
