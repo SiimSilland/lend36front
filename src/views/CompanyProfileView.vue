@@ -70,11 +70,13 @@
 <script>
 import UserService from "@/services/UserService";
 import NavigationService from "@/services/NavigationService";
+import {useRoute} from "vue-router";
 
 export default {
   name: "CompanyProfileView",
   data() {
     return {
+      userId: Number(useRoute().params.userId),
       newCompany: {
         companyName: '',
         registrationNumber: '',
@@ -88,7 +90,7 @@ export default {
   },
   methods: {
     addNewCompanyProfile() {
-      UserService.sendPostNewCompanyProfileRequest(this.newCompany)
+      UserService.sendPostNewCompanyProfileRequest(this.userId, this.newCompany)
           .then(() => NavigationService.navigateToLoginView())
           .catch(error => console.error("Error updating company profile:", error));
     }
