@@ -44,6 +44,7 @@ export default {
   },
   data() {
     return {
+      groupId: 0,
       groupNumber: '',
       groupPeriod: '',
       groupLectorName: ''
