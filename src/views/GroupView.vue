@@ -14,10 +14,10 @@
             </thead>
             <tbody class="table-group-divider">
             <!--     alljärgnev osa dynaamiliseks for loop 'groups'pealt       -->
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
+            <tr v-for="group in groups" :key="group.groupId">
+              <th scope="row">{{group.groupNumber}}</th>
+              <td>{{ group.groupPeriod }}</td>
+              <td>{{group.lectorName}}</td>
             </tr>
             </tbody>
           </table>
