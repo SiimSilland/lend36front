@@ -15,7 +15,8 @@ import CompanyInternshipView from "@/views/CompanyInternshipView.vue";
 import CompanyStudentsView from "@/views/CompanyStudentsView.vue";
 import CompanyTaskListView from "@/views/CompanyTaskListView.vue";
 import StudentTaskView from "@/views/StudentTaskView.vue";
-import StudentProfileTable from "@/components/StudenProfile/StudentProfileTable.vue";
+import StudentViewProfileTable from "@/components/StudenProfile/StudentViewProfileTable.vue";
+import ErrorView from "@/views/ErrorView.vue";
 
 const routes = [
     {
@@ -102,6 +103,11 @@ const routes = [
         path: '/company',
         name: 'companyRoute',
         component: CompanyLanding
+    },
+    {
+        path: '/error',
+        name: 'errorRoute',
+        component: ErrorView
     },
 
 ]

@@ -31,8 +31,15 @@
           </div>
           <div class="col">
             <h3>MUUD ISIKLIKUD ANDMED</h3>
-            <StudentProfileTable />
-            <h3> <button type="button" class="btn btn-outline-primary">Lisa CV</button> </h3>
+            <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
+              @event-email-changed="setStudentProfileEmail"
+            />
+            <StudentProfileTable v-else :student-profile="studentProfile"/>
+            <h3>
+              <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+              </button>
+              <button type="button" class="btn btn-outline-primary">Lisa CV</button>
+            </h3>
           </div>
         </div>
       </div>
@@ -46,21 +53,25 @@
 </template>
 <script>
 
-import axios from "axios";
-import StudentProfileTable from "@/components/StudenProfile/StudentProfileTable.vue";
+import StudentViewProfileTable from "@/components/StudenProfile/StudentViewProfileTable.vue";
 import StudentProfileService from "@/services/StudentProfileService";
+import NavigationService from "@/services/NavigationService";
+import axios from "axios";
+import StudentEditProfileTable from "@/components/StudenProfile/StudentEditProfileTable.vue";
 
 export default {
   name: 'StudentProfileView',
-  components: {StudentProfileTable},
-  props:{
+  components: {StudentEditProfileTable, StudentProfileTable: StudentViewProfileTable},
+  props: {
     isStudent: Boolean,
 
   },
 
   data() {
     return {
-      isStudent: false,
+      isEditMode: false,
+      userId: Number(sessionStorage.getItem('userId')),
+      isStudent: true,
 
       studentProfile: {
         firstName: '',
@@ -73,44 +84,23 @@ export default {
 
     }
   },
-
-  mounted() {
-    const userId = this.getUserId();
-    if (userId){
-      this.fetchStudentProfile(userId)
-    }
-  },
-
   methods: {
-
-    checkUserRole() {
-      const roleName = sessionStorage.getItem('roleName')
-      this.isStudent = roleName === 'student'
-
-      if (!this.isStudent) {
-        setTimeout(() => {
-          this.$router.push('/')
-        }, 2000)
-
-      }
+    setStudentProfileEmail(email) {
+      this.studentProfile.email = email
     },
 
-    getUserId(){
-      return sessionStorage.getItem('userId');
+    startEdit() {
+      this.isEditMode = true
     },
 
-    fetchStudentProfile(userId){
-      return  StudentProfileService.sendGetStudentProfile(userId)
-      .then((response)=> {
-        this.studentProfile = response.data;})
-          .catch((error)=> {
-            console.error("Failed to fetch student profile: ", error);
-          })
-    }
-
+    getStudentProfile() {
+      StudentProfileService.sendGetStudentProfile(this.userId)
+          .then(response => this.studentProfile = response.data)
+          .catch(() => NavigationService.navigateToErrorView());
+    },
   },
   beforeMount() {
-    this.checkUserRole();
+    this.getStudentProfile()
   }
 }
 
