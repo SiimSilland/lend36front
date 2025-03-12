@@ -31,7 +31,7 @@
           </div>
           <div class="col">
             <h3>MUUD ISIKLIKUD ANDMED</h3>
-            <StudentProfileTable/>
+            <StudentProfileTable />
             <h3> <button type="button" class="btn btn-outline-primary">Lisa CV</button> </h3>
           </div>
         </div>
@@ -95,8 +95,8 @@ export default {
       return sessionStorage.getItem('userId');
     },
 
-    fetchStudentProfile(userId){
-      return  StudentProfileService.fetchStudentProfile('userId');
+    fetchStudentProfile(){
+      return  StudentProfileService.sendGetStudentProfile('userId');
     }
 
   },

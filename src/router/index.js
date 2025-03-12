@@ -15,6 +15,7 @@ import CompanyInternshipView from "@/views/CompanyInternshipView.vue";
 import CompanyStudentsView from "@/views/CompanyStudentsView.vue";
 import CompanyTaskListView from "@/views/CompanyTaskListView.vue";
 import StudentTaskView from "@/views/StudentTaskView.vue";
+import StudentProfileTable from "@/components/StudenProfile/StudentProfileTable.vue";
 
 const routes = [
     {
@@ -67,7 +68,6 @@ const routes = [
         name: 'studentProfileRoute',
         component: StudentProfileView
     },
-
     {
         path: '/company/register',
         name: 'companyRegisterRoute',

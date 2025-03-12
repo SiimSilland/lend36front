@@ -6,7 +6,7 @@
     <tbody>
     <tr>
       <th scope="row">Aadress</th>
-      <td>{{studentProfile.address}}}</td>
+      <td>{{studentProfile.address}}</td>
     </tr>
     <tr>
       <th scope="row">Telefon</th>
@@ -14,11 +14,11 @@
     </tr>
     <tr>
       <th scope="row">e-post</th>
-      <td colspan="2">{{studentProfile.email}}}</td>
+      <td colspan="2">{{studentProfile.email}}</td>
     </tr>
     <tr>
       <th scope="row">linkedin</th>
-      <td colspan="2">{{studentProfile.linkedin}}}</td>
+      <td colspan="2">{{studentProfile.linkedin}}</td>
     </tr>
     </tbody>
   </table>
@@ -49,7 +49,9 @@ export default {
   mounted() {
     const userId = this.getUserId();
     if (userId){
-      this.fetchStudentProfile()
+      this.fetchStudentProfile(userId);
+    } else {
+      console.warn("No userId found in sessionStorage");
     }
   },
 
@@ -59,12 +61,15 @@ export default {
       return sessionStorage.getItem('userId');
     },
 
+
     fetchStudentProfile(userId){
-      return  StudentProfileService.fetchStudentProfile('userId');
+      return  StudentProfileService.sendGetStudentProfile(userId)
+        .then((response)=> {
+          this.studentProfile = response.data;})
+          .catch((error)=> {
+            console.error("Failed yo fetch student profile: ", error);
+          })
     }
-
   }
-
 }
-
 </script>
