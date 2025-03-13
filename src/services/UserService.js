@@ -6,6 +6,6 @@ export default {
         return axios.post('/user', newStudent);
     },
     sendPostNewCompanyRequest(newCompany) {
-        return axios.post('/user', newCompany);
+        return axios.post('/company/register', newCompany);
     },
 };
