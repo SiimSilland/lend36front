@@ -116,7 +116,7 @@ export default {
       StudentProfileService.updateStudentProfile(this.userId, this.studentProfile)
           .then(response => {
             this.isEditMode = false;
-            this.studentProfile = response.data;
+
           })
           .catch( error =>{
             console.error('Error saving profile: ', error);
