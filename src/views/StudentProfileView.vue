@@ -10,6 +10,9 @@
         <div class="row align-items-start">
           <div class="col">
             EELISTUSED ASUKOHA OSAS
+            <div class="row">
+              siia linnade nimekiri
+            </div>
           </div>
           <div class="col">
             Lühitutvustus
@@ -65,9 +68,7 @@
 import StudentViewProfileTable from "@/components/StudenProfile/StudentViewProfileTable.vue";
 import StudentProfileService from "@/services/StudentProfileService";
 import NavigationService from "@/services/NavigationService";
-import axios from "axios";
 import StudentEditProfileTable from "@/components/StudenProfile/StudentEditProfileTable.vue";
-import {useId} from "vue";
 
 export default {
   name: 'StudentProfileView',
@@ -96,10 +97,10 @@ export default {
   },
   methods: {
 
-    setStudentProfileAddress(address){
+    setStudentProfileAddress(address) {
       this.studentProfile.address = address
     },
-    setStudentProfilePhone(phone){
+    setStudentProfilePhone(phone) {
       this.studentProfile.phone = phone
     },
     setStudentProfileEmail(email) {
@@ -112,23 +113,16 @@ export default {
     startEdit() {
       this.isEditMode = true
     },
-    saveEdit(){
+    saveEdit() {
       StudentProfileService.updateStudentProfile(this.userId, this.studentProfile)
           .then(response => {
             this.isEditMode = false;
 
           })
-          .catch( error =>{
+          .catch(error => {
             console.error('Error saving profile: ', error);
             alert('Profiili salvestamisel tekkis vida');
-            //this.getStudentProfile();
           });
-
-    },
-
-    updateStudentProfile() {
-      StudentProfileService.updateStudentProfile(this.userId, this.studentProfile)
-
     },
 
     getStudentProfile() {
