@@ -96,6 +96,10 @@ export default {
   },
   methods: {
 
+    startEdit() {
+      this.isEditMode = true
+    },
+
     setStudentProfileAddress(address){
       this.studentProfile.address = address
     },
