@@ -11,7 +11,7 @@
           <div class="col">
             EELISTUSED ASUKOHA OSAS
             <div class="row">
-              <PreferredCityTable/>
+              siiapreferredcitytable
             </div>
           </div>
           <div class="col">
@@ -21,16 +21,15 @@
 
           </div>
           <div class="col">
-            PILT
             <div class="row">
-             //
-              //
+             <UserImage :image-data="userImageDto.userImageData"/>
             </div>
             <div class="row">
-              Pilt
+
               <h3>
-                <button type="button" class="btn btn-outline-primary">Lisa Pilt</button>
+                <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt</button>
               </h3>
+              <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
 
             </div>
             <div class="row">
@@ -79,7 +78,7 @@
     </div>
   </div>
   <div v-else class="unauthorized-message">
-    <h2> Juuredepääs keelatud </h2>
+    <h2> Juurdepääs keelatud </h2>
     <p>Teil pole selle lehe vaatamiseks õiguse.</p>
   </div>
 </template>
@@ -92,6 +91,7 @@ import StudentEditProfileTable from "@/components/StudenProfile/StudentEditProfi
 import PreferredCityTable from "@/components/StudenProfile/PreferredCityTable.vue";
 import UserImage from "@/components/image/UserImage.vue";
 import ImageInput from "@/components/image/ImageInput.vue";
+import UserImageService from "@/services/UserImageService";
 
 export default {
   name: 'StudentProfileView',
@@ -116,7 +116,10 @@ export default {
         email: ''
       },
 
-      userImageData: ''
+      userImageDto: {
+        userId: '',
+        userImageData: ''
+      }
     }
   },
   methods: {
@@ -154,9 +157,24 @@ export default {
           .then(response => this.studentProfile = response.data)
           .catch(() => NavigationService.navigateToErrorView());
     },
+    getUserImage() {
+      UserImageService.sendGetUserImage(this.userId)
+          .then(response => this.userImageDto = response.data)
+          .catch(() => NavigationService.navigateToErrorView());
+    },
+
+    sendPostUserImage(userImageDto){
+      UserImageService.sendPostUserImage(userImageDto)
+    },
+
+    sendDeleteUserImage(userId){
+      UserImageService.sendDeleteUserImage(userId)
+    }
+
   },
   beforeMount() {
     this.getStudentProfile()
+    this.getUserImage()
 
   }
 }
