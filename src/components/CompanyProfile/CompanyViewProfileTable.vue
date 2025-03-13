@@ -11,10 +11,13 @@
         <td>{{ companyProfile.phone }}</td>
       </tr>
       <tr>
-        <th scope="row">e-post</th>
-        <td colspan="2">{{ companyProfile.email }}</td>
+        <th scope="row">www</th>
+        <td colspan="2">{{ companyProfile.www}}</td>
       </tr>
-
+      <tr>
+        <th scope="row">description</th>
+        <td colspan="2">{{ companyProfile.description}}</td>
+      </tr>
       </tbody>
     </table>
 

@@ -1,82 +1,91 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div class="background">
     <div class="company-profile-page">
       <div class="container text-center">
         <div class="row justify-content-center">
           <div class="col-12">
-            <h1 class="title">Ettevõtte profiil</h1>
+            <div v-if="isCompany">
+              <div class="row">
+                <div class="col">
+                  <h1> {{ companyProfile.companyName}}</h1>
           </div>
         </div>
       </div>
+</div>
 
-      <div class="container">
-        <div class="row">
 
           <div class="col-md-6">
             <label for="tegevusvaldkond" class="form-label label-black-bold">Tegevusvaldkond</label>
             <div class="form-floating">
-              <textarea v-model="newCompany.description" class="form-control textarea-fixed" id="tegevusvaldkond"></textarea>
+              <textarea v-model="companyProfile.description" class="form-control textarea-fixed" id="tegevusvaldkond"></textarea>
 
             </div>
           </div>
 
           <!-- Right Column: Other Inputs -->
           <div class="col-md-6">
-            <div class="input-group mb-3">
-              <span class="input-group-text">Ettevõtte nimi</span>
-              <input v-model="newCompany.companyName" type="text" class="form-control">
-            </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text">Registrikood</span>
-              <input v-model="newCompany.registrationNumber" type="text" class="form-control">
-            </div>
+            <div class="container">
+              <div class="row">
+                <CompanyEditProfileTable v-if="isEditMode" :company-profile="companyProfile"
+                                         @event-address-changed="setCompanyProfilePhoneNumber"
+                                         @event-phone-changed="setCompanyProfileDescription"
+                                         @event-email-changed="setCompanyProfileAddress"
+                                         @event-linkedin-changed="setCompanyProfileWww"
 
-            <div class="input-group mb-3">
-              <span class="input-group-text">Email</span>
-              <input v-model="newCompany.email" type="email" class="form-control">
-            </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text">Telefon</span>
-              <input v-model="newCompany.phoneNumber" type="tel" class="form-control">
-            </div>
+                />
+                <CompanyEditProfileTable v-else :company-profile="companyProfile"/>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text">Aadress</span>
-              <input v-model="newCompany.address" type="text" class="form-control">
-            </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text">Veebileht</span>
-              <input v-model="newCompany.www" type="url" class="form-control">
-            </div>
+
           </div>
         </div>
            <div class="row mt-4">
           <div class="col text-center">
-            <button @click="addNewCompanyProfile" type="submit" class="btn btn-custom">
-              Uuenda andmed
-            </button>
+            <h3>
+              <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+              </button>
+
+              <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
+              </button>
+
+
+            </h3>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
-import UserService from "@/services/UserService";
+
 import NavigationService from "@/services/NavigationService";
 import CompanyService from "@/services/CompanyService";
-
+import CompanyViewProfileTable from "@/components/CompanyProfile/CompanyViewProfileTable.vue";
+import CompanyEditProfileTable from "@/components/CompanyProfile/CompanyEditProfileTable.vue";
 
 export default {
   name: "CompanyProfileView",
+  components: {CompanyEditProfileTable, CompanyProfileTable: CompanyViewProfileTable},
+  props: {
+    isCompany: Boolean,
+
+  },
+
+
   data() {
     return {
+isEditMode: false,
 
-      newCompany: {
+      userId: Number(sessionStorage.getItem('userId')),
+      isCompany: true,
+
+      companyProfile: {
         companyName: '',
         registrationNumber: '',
         email: '',
@@ -88,13 +97,49 @@ export default {
     };
   },
   methods: {
-    addNewCompanyProfile() {
-      CompanyService.sendPutNewCompanyProfileRequest(this.newCompany)
-          .then(() => NavigationService.navigateToLoginView())
+    setCompanyProfilePhoneNumber(phoneNumber){
+      this.companyProfile.phoneNumber = phoneNumber
+    },
+    setCompanyProfileAddress(address){
+      this.companyProfile.address = address
+    },
+    setCompanyProfileWww(www) {
+      this.companyProfile.www = www
+    },
+    setCompanyProfileDescription(description) {
+      this.companyProfile.description = description
+    },
 
+    startEdit() {
+      this.isEditMode = true
+    },
+    async saveEdit() {
+      try {
+        const response = await CompanyService.updateCompanyProfile(this.userId, this.companyProfile);
+        this.companyProfile = { ...response.data };
+        this.isEditMode = false;
+      } catch (error) {
+        console.error('Error saving profile: ', error);
+        alert('Profiili salvestamisel tekkis viga');
+      }
+    },
+    async getCompanyProfile() {
+      try {
+        const response = await CompanyService.sendGetCompanyProfile(this.userId);
+        this.companyProfile = { ...response.data };
+      } catch (error) {
+        NavigationService.navigateToErrorView();
+      }
     }
+  },
+  async created() {
+    await this.getCompanyProfile();
   }
-};
+
+
+
+}
+
 </script>
 
 <style scoped>

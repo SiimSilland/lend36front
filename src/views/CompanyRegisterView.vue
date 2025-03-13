@@ -76,7 +76,7 @@ export default {
       if (this.passwordNoMatch()) {
         this.errorMessage = "Paroolid ei kattu"
       } else {
-        CompanyService.sendPostNewCompanyRequest(this.newCompany)
+        UserService.sendPostNewCompanyRequest(this.newCompany)
             .then(() => NavigationService.navigateToLoginView())
 
       }
