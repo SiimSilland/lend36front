@@ -15,6 +15,10 @@ export default {
   methods: {
     handleImage(event) {
       const selectedImage = event.target.files[0];
+      if (selectedImage.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('Image size exceeds 5MB limit');
+        return;
+      }
       this.emitBase64(selectedImage);
     },
 
