@@ -101,6 +101,7 @@ export default {
 
   },
 
+
   data() {
     return {
       isEditMode: false,
@@ -163,12 +164,12 @@ export default {
           .catch(() => NavigationService.navigateToErrorView());
     },
 
-    sendPostUserImage(userImageDto){
-      UserImageService.sendPostUserImage(userImageDto)
+    sendPostUserImage(){
+      UserImageService.sendPostUserImage(this.userId, this.userImageDto)
     },
 
-    sendDeleteUserImage(userId){
-      UserImageService.sendDeleteUserImage(userId)
+    sendDeleteUserImage(){
+      UserImageService.sendDeleteUserImage(this.userId)
     }
 
   },
