@@ -109,31 +109,35 @@ export default {
       this.studentProfile.linkedin = linkedin
     },
 
-    startEdit() {
-      this.isEditMode = true
+    saveEdit(){
+      StudentProfileService.updateStudentProfile(this.userId, this.studentProfile)
+          .then(response => {
+            this.isEditMode = false;
+            this.studentProfile = response.data;
+          })
+          .catch( error =>{
+            console.error('Error saving profile: ', error);
+            alert('Profiili salvestamisel tekkis vida');
+            //this.getStudentProfile();
+          });
+
     },
-    async saveEdit() {
-      try {
-        const response = await StudentProfileService.updateStudentProfile(this.userId, this.studentProfile);
-        this.studentProfile = { ...response.data }; // Spread operator to ensure reactivity
-        this.isEditMode = false;
-      } catch (error) {
-        console.error('Error saving profile: ', error);
-        alert('Profiili salvestamisel tekkis viga');
-      }
+
+    updateStudentProfile() {
+      StudentProfileService.updateStudentProfile(this.userId, this.studentProfile)
+
     },
-    async getStudentProfile() {
-      try {
-        const response = await StudentProfileService.sendGetStudentProfile(this.userId);
-        this.studentProfile = { ...response.data }; // Spread operator to ensure reactivity
-      } catch (error) {
-        NavigationService.navigateToErrorView();
-      }
-    }
+
+    getStudentProfile() {
+      StudentProfileService.sendGetStudentProfile(this.userId)
+          .then(response => this.studentProfile = response.data)
+          .catch(() => NavigationService.navigateToErrorView());
+    },
   },
-  async created() {  // Changed from beforeMount to created
-    await this.getStudentProfile();
+  beforeMount() {
+    this.getStudentProfile()
   }
+
 
 
 

@@ -1,26 +1,20 @@
 import axios from "axios";
 
 export default {
-    async updateStudentProfile(userId, studentProfile) {
-        try {
-            const response = await axios.put('/student/profile', {
-                userId: userId,
-                ...studentProfile
-            });
-            return response;
-        } catch (error) {
-            throw error;
-        }
+    sendGetStudentProfile(userId) {
+        return axios.get('/student/profile', {
+                params: {
+                    userId: userId
+                }
+            }
+        )
     },
-
-    async sendGetStudentProfile(userId) {
-        try {
-            const response = await axios.get('/student/profile', {
-                params: { userId }
-            });
-            return response;
-        } catch (error) {
-            throw error;
-        }
+    updateStudentProfile(userId, studentProfile) {
+        return axios.put('/student/profile', studentProfile,{
+            params:{
+                userId: userId
+            }
+        });
     }
+
 }
