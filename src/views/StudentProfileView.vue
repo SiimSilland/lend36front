@@ -11,14 +11,50 @@
           <div class="col">
             EELISTUSED ASUKOHA OSAS
             <div class="row">
-              siia linnade nimekiri
+              <PreferredCityTable/>
             </div>
           </div>
           <div class="col">
-            Lühitutvustus
+
+            <div class="row">Lühitutvustus</div>
+            <div class="row">(SIIA LÜHITUTVUSTUS)</div>
+
           </div>
           <div class="col">
             PILT
+            <div class="row">
+             //
+              //
+            </div>
+            <div class="row">
+              Pilt
+              <h3>
+                <button type="button" class="btn btn-outline-primary">Lisa Pilt</button>
+              </h3>
+
+            </div>
+            <div class="row">
+              <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
+                                       @event-address-changed="setStudentProfileAddress"
+                                       @event-phone-changed="setStudentProfilePhone"
+                                       @event-email-changed="setStudentProfileEmail"
+                                       @event-linkedin-changed="setStudentProfileLinkedin"
+
+
+              />
+              <StudentProfileTable v-else :student-profile="studentProfile"/>
+              <h3>
+                <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+                </button>
+
+                <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
+                </button>
+
+                <button type="button" class="btn btn-outline-primary">Lisa CV</button>
+              </h3>
+
+            </div>
+
           </div>
         </div>
       </div>
@@ -27,31 +63,15 @@
       <div class="container text-center">
         <div class="row align-items-start">
           <div class="col">
-            <h5>EELISTUSED PRAKTIKA ALGUSE OSAS</h5>
+
+            <div class="row">Eelistatud praktika algus</div>
+            <div class="row">(SIIA KALENDER)</div>
           </div>
           <div class="col">
-            (SIIA LÜHITUTVUSTUS)
+            <h3>Tühi column</h3>
           </div>
           <div class="col">
-            <h3>MUUD ISIKLIKUD ANDMED</h3>
-            <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
-                                     @event-address-changed="setStudentProfileAddress"
-                                     @event-phone-changed="setStudentProfilePhone"
-                                     @event-email-changed="setStudentProfileEmail"
-                                     @event-linkedin-changed="setStudentProfileLinkedin"
-
-
-            />
-            <StudentProfileTable v-else :student-profile="studentProfile"/>
-            <h3>
-              <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
-              </button>
-
-              <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
-              </button>
-
-              <button type="button" class="btn btn-outline-primary">Lisa CV</button>
-            </h3>
+            <h3>Tühi column</h3>
           </div>
         </div>
       </div>
@@ -69,10 +89,13 @@ import StudentViewProfileTable from "@/components/StudenProfile/StudentViewProfi
 import StudentProfileService from "@/services/StudentProfileService";
 import NavigationService from "@/services/NavigationService";
 import StudentEditProfileTable from "@/components/StudenProfile/StudentEditProfileTable.vue";
+import PreferredCityTable from "@/components/StudenProfile/PreferredCityTable.vue";
+import UserImage from "@/components/image/UserImage.vue";
+import ImageInput from "@/components/image/ImageInput.vue";
 
 export default {
   name: 'StudentProfileView',
-  components: {StudentEditProfileTable, StudentProfileTable: StudentViewProfileTable},
+  components: {ImageInput, UserImage, PreferredCityTable, StudentEditProfileTable, StudentProfileTable: StudentViewProfileTable},
   props: {
     isStudent: Boolean,
 
@@ -91,8 +114,9 @@ export default {
         phone: '',
         linkedin: '',
         email: ''
-      }
+      },
 
+      userImageData: ''
     }
   },
   methods: {
