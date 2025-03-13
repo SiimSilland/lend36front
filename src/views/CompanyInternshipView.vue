@@ -27,7 +27,8 @@
               <input v-model="newInternship.email" id="email" name="email" />
               <label for="email">Email</label>
             </div>
-
+            <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+            </button>
             <button @click.prevent="addNewInternship" class="btn btn-outline-success">Uuenda</button>
           </div>
         </div>

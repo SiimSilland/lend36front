@@ -5,9 +5,10 @@ export default {
         return axios.post('/company/register', newCompany);
     },
     sendPostNewInternshipRequest(internshipDto) {
-        return axios.post('/company/internship', internshipDto);
+        return axios.post('/company/internship', internship);
     },
     sendPutNewCompanyProfileRequest(companyProfile) {
-        return axios.put('/company/profile/update', companyProfile);
+        return axios.put('/company/profile', companyProfile);
+
+        }
     }
-}
