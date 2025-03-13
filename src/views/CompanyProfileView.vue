@@ -17,9 +17,21 @@
           <div class="col-md-6">
             <label for="tegevusvaldkond" class="form-label label-black-bold">Tegevusvaldkond</label>
             <div class="form-floating">
+
+              <CompanyEditProfileTable v-if="isEditMode" :company-profile="companyProfile"/>
               <textarea v-model="companyProfile.description" class="form-control textarea-fixed" id="tegevusvaldkond"></textarea>
 
+
             </div>
+            <h3>
+              <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+              </button>
+
+              <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
+              </button>
+
+
+            </h3>
           </div>
 
           <!-- Right Column: Other Inputs -->
@@ -28,16 +40,14 @@
             <div class="container">
               <div class="row">
                 <CompanyEditProfileTable v-if="isEditMode" :company-profile="companyProfile"
-                                         @event-address-changed="setCompanyProfilePhoneNumber"
-                                         @event-phone-changed="setCompanyProfileDescription"
-                                         @event-email-changed="setCompanyProfileAddress"
+                                         @event-companyName-changed="setCompanyProfileCompanyName"
+                                         @event-registrationNumber-changed="setCompanyProfileRegistrationNumber"
+                                         @event-email-changed="setCompanyProfileEmail"
+                                         @event-phoneNumber-changed="setCompanyProfilePhoneNumber"
+                                         @event-address-changed="setCompanyProfileAddress"
                                          @event-linkedin-changed="setCompanyProfileWww"
-
-
                 />
                 <CompanyEditProfileTable v-else :company-profile="companyProfile"/>
-
-
 
           </div>
         </div>
@@ -97,6 +107,15 @@ isEditMode: false,
     };
   },
   methods: {
+    setCompanyProfileCompanyName(companyName){
+      this.companyProfile.companyName = companyName
+    },
+    setCompanyProfileRegistrationNumber(registrationNumber){
+      this.companyProfile.registrationNumber = registrationNumber
+    },
+    setCompanyProfileEmail(email){
+      this.companyProfile.email =  email
+    },
     setCompanyProfilePhoneNumber(phoneNumber){
       this.companyProfile.phoneNumber = phoneNumber
     },
@@ -135,9 +154,6 @@ isEditMode: false,
   async created() {
     await this.getCompanyProfile();
   }
-
-
-
 }
 
 </script>
