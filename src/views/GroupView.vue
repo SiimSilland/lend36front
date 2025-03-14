@@ -1,5 +1,10 @@
 <template>
   <div>
+    <AddGroupModal :modal-is-open="modalIsOpen"
+                   @event-group-added="getGroups"
+                   @event-close-modal="closeAddGroupModal"
+    />
+
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col">
@@ -30,7 +35,7 @@
 
       </div>
       <div class="col">
-        <button @click="addGroup" type="submit" class="btn btn-outline-success">Lisa lend</button>
+        <button @click="openAddGroupModal" type="submit" class="btn btn-outline-success">Lisa lend</button>
       </div>
     </div>
   </div>
@@ -38,8 +43,11 @@
 
 <script>
 import AddGroupModal from "@/components/modal/AddGroupModal.vue";
-import axios from "axios";
+import axios, {HttpStatusCode} from "axios";
 import NavigationService from "@/services/NavigationService";
+import GroupService from "@/services/GroupService";
+import BusinessErrors from "@/errors/BusinessErrors";
+import HttpStatusCodes from "@/errors/HttpStatusCodes";
 
 export default {
   name: 'GroupView',
@@ -58,7 +66,11 @@ export default {
           groupPeriod: '',
           lectorName: ''
         }
-      ]
+      ],
+      errorResponse: {
+        message: '',
+        errorCode: 0
+      }
     }
   },
   methods:{
@@ -72,15 +84,26 @@ export default {
           .then(response => {
             this.groups = response.data
           })
-          .catch(error => {
-            this.someDataBlockErrorResponseObject = error.response.data
+          .catch(() => {
+            NavigationService.navigateToErrorView()
           })
     },
+
+    openAddGroupModal() {
+      this.modalIsOpen = true
+    },
+
     validateIsAdmin() {
       const roleName = sessionStorage.getItem('roleName')
       this.IsAdmin = roleName != null && roleName === 'admin'
     },
+
+    closeAddGroupModal() {
+      this.modalIsOpen = false
+    },
+
   },
+
 
   beforeMount() {
     this.validateIsAdmin()
