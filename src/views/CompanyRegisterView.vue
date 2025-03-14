@@ -87,3 +87,11 @@ export default {
 }
 </script>
 
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>
