@@ -125,7 +125,7 @@ export default {
 
     alertMissingFields() {
       this.message = 'Täida kõik väljad'
-      //   setTimeout (this.resetAlertMessage // Timeoutist ei saa aru
+      setTimeout(this.resetMessage, 4000)
     },
 
     handleIncorrectCredentialsAlert() {
