@@ -1,5 +1,4 @@
 
-
 <template>
   <div>
     <img v-if="userImageData.length === 0"

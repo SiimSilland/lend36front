@@ -22,7 +22,7 @@
           </div>
           <div class="col">
             <div class="row">
-             <UserImage :image-data="userImageDto.userImageData"/>
+             <UserImage :user-image-data="userImageDto.userImageData"/>
             </div>
             <div class="row">
 
@@ -178,7 +178,8 @@ export default {
           .catch(() => NavigationService.navigateToErrorView());
     },
 
-    sendPostUserImage(){
+    sendPostUserImage(imageData){
+      this.userImageDto.userImageData = imageData
       UserImageService.sendPostUserImage(this.userId, this.userImageDto)
     },
 
