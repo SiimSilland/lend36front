@@ -15,6 +15,10 @@ export default {
   methods: {
     handleImage(event) {
       const selectedImage = event.target.files[0];
+      if (selectedImage.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('Image size exceeds 5MB limit');
+        return;
+      }
       this.emitBase64(selectedImage);
     },
 
@@ -22,7 +26,7 @@ export default {
       const reader = new FileReader();
       reader.onload = () => {
         this.imageDataBase64 = reader.result;
-        this.$emit('event-new-image-selected', this.imageDataBase64)
+        this.$emit('event-new-image-posted', this.imageDataBase64)
       };
       reader.onerror = function (error) {
         alert(error);
