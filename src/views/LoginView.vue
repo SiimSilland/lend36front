@@ -45,9 +45,9 @@
 
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import LoginService from "@/services/LoginService";
-import {HttpStatusCode} from "axios";
 import NavigationService from "@/services/NavigationService";
 import BusinessErrors from "@/errors/BusinessErrors";
+import HttpStatusCode from "@/errors/HttpStatusCodes";
 
 export default {
   name: 'LoginView',
@@ -114,7 +114,7 @@ export default {
       if (this.isIncorrectCredentials(httpStatusCode)) {
         this.handleIncorrectCredentialsAlert()
       } else {
-        NavigationService.navigationToErrorView() // Vaja teha
+        NavigationService.navigateToErrorView()
       }
     },
 
@@ -128,6 +128,14 @@ export default {
       //   setTimeout (this.resetAlertMessage // Timeoutist ei saa aru
     },
 
+    handleIncorrectCredentialsAlert() {
+      this.message = this.errorResponse.message
+      setTimeout(this.resetMessage, 4000)
+    },
+
+    resetMessage() {
+      this.message = ''
+    },
 
     navigateToCompanyRegisterView() {
       NavigationService.navigateToCompanyRegisterView()
