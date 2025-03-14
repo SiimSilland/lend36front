@@ -16,7 +16,7 @@
                     }
         });
         },
-    sendPostNewInternshipRequest(internship) {
-        return axios.post('/company/internship', internship);
+    sendPutNewInternshipRequest(internship) {
+        return axios.put('/company/internship', internship);
         },
     }

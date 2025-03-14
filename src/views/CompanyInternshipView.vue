@@ -6,30 +6,27 @@
           <div class="row justify-content-center">
             <h1 class="title">Praktikavõimalused</h1>
 
-            agenda
-            <form style="display: flex; align-items: flex-start; gap: 10px;">
-              <label for="position">Positsioon</label>
-              <input v-model="newInternship.title" type="text" style="vertical-align: top;" />
-              <label for="description">Kirjeldus</label>
-              <input v-model="newInternship.description" type="text" style="vertical-align: top;" />
-            </form>
-
-            <div class="spacer"></div>
-
-            <h3 class="title">Praktikakoordinaator</h3>
-
-            <div class="form-group">
-              <input v-model="newInternship.name" id="name" name="name" />
-              <label for="name">Nimi</label>
+            <!-- Show edit form when in edit mode -->
+            <div v-if="isEditMode">
+              <InternshipEditTable
+                  :newInternship="newInternship"
+                  @event-title-changed="setInternshipTitle"
+                  @event-description-changed="setInternshipDescription"
+                  @event-name-changed="setInternshipName"
+                  @event-email-changed="setInternshipEmail"
+              />
             </div>
 
-            <div class="form-group">
-              <input v-model="newInternship.email" id="email" name="email" />
-              <label for="email">Email</label>
+            <!-- Show view-only table when not in edit mode -->
+            <div v-else>
+              <InternshipViewTable :newInternship="newInternship" />
             </div>
-            <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
-            </button>
-            <button @click.prevent="addNewInternship" class="btn btn-outline-success">Uuenda</button>
+          </div>
+
+          <!-- Edit/Save Buttons -->
+          <div class="col text-center">
+            <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda</button>
+            <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta</button>
           </div>
         </div>
       </div>
@@ -38,14 +35,16 @@
 </template>
 
 <script>
-
-import NavigationService from "@/services/NavigationService";
 import CompanyService from "@/services/CompanyService";
+import InternshipViewTable from "@/components/Internship/InternshipViewTable.vue";
+import InternshipEditTable from "@/components/Internship/InternshipEditTable.vue";
 
 export default {
   name: "CompanyInternshipView",
+  components: { InternshipEditTable, InternshipViewTable },
   data() {
     return {
+      isEditMode: false,
       newInternship: {
         title: '',
         description: '',
@@ -55,12 +54,35 @@ export default {
     };
   },
   methods: {
-    addNewInternship() {
-      CompanyService.sendPostNewInternshipRequest(this.newInternship)
-          .then(() => NavigationService.navigateToLoginView())
+    setInternshipTitle(title) {
+      this.newInternship.title = title;
+    },
+    setInternshipDescription(description) {
+      this.newInternship.description = description;
+    },
+    setInternshipEmail(email) {
+      this.newInternship.email = email;
+    },
+    setInternshipName(name) {
+      this.newInternship.name = name;
+    },
 
+    startEdit() {
+      this.isEditMode = true;
+    },
+
+    saveEdit() {
+      CompanyService.sendPutNewInternshipRequest(this.newInternship)
+          .then(response  => {
+            this.isEditMode = false;
+          })
+          .catch(error => {
+            console.error('Error saving internship: ', error);
+            alert('Praktika salvestamisel tekkis viga');
+          });
     }
-  }
+  },
+
 };
 </script>
 
@@ -77,16 +99,11 @@ export default {
   color: white;
 }
 
-label {
-  color: black;
-}
-
 .title {
   color: black;
 }
 
-input,
-textarea {
+input, textarea {
   color: black;
 }
 
