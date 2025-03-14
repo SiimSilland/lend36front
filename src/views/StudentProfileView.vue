@@ -92,6 +92,8 @@ import PreferredCityTable from "@/components/StudenProfile/PreferredCityTable.vu
 import UserImage from "@/components/image/UserImage.vue";
 import ImageInput from "@/components/image/ImageInput.vue";
 import UserImageService from "@/services/UserImageService";
+import PreferredCityService from "@/services/PreferredCityService";
+import CityService from "@/services/CityService";
 
 export default {
   name: 'StudentProfileView',
@@ -128,7 +130,7 @@ export default {
         cityId:''
       },
 
-      City: {
+      cityDropdown: {
         cityId:'',
         cityName:'',
       },
@@ -182,12 +184,26 @@ export default {
 
     sendDeleteUserImage(){
       UserImageService.sendDeleteUserImage(this.userId)
+    },
+
+    sendGetPreferredCityList(){
+      PreferredCityService.sendGetPreferredCityList(this.userId)
+          .then(response => this.preferredCity = response.data)
+          .catch(() => NavigationService.navigateToErrorView());
+    },
+
+    sendGetCityList(){
+    CityService.sendGetCities()
+      .then(response => this.cityDropdown= response.data)
+        .catch(() => NavigationService.navigateToErrorView());
     }
 
   },
   beforeMount() {
     this.getStudentProfile()
     this.getUserImage()
+    this.sendGetPreferredCityList()
+    this.sendGetCityList()
 
   }
 }

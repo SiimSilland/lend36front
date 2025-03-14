@@ -10,12 +10,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">{{cityName}}}</th>
+      <tr v-for="preferredCity in preferredCity" :key="preferredCity.cityId">
+        <th scope="row">{{cityName}}</th>
 
       </tr>
       <tr>
-        <th scope="row"></th>
+        <th scope="row">{{preferredCity.cityId}}</th>
 
       </tr>
       <tr>
@@ -34,9 +34,10 @@ export default {
   name: "PreferredCityTable",
 
   props:{
-    preferredCity{},
-    City:'',
-  },
+  preferredCity: Object
+
+},
+
 
   data(){
     return{
@@ -48,8 +49,8 @@ export default {
 
       preferredCity: {
         userId:'',
-        cityId: ''
-      }
+        cityId:''
+      },
     }
   }
 
