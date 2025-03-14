@@ -7,8 +7,8 @@
             <div v-if="isCompany">
               <div class="row">
                 <div class="col">
-                  <h1>{{ companyProfile.companyName }}</h1>
-                </div>
+                  <h1>{{ companyProfileName }}</h1>
+                    </div>
               </div>
             </div>
           </div>
@@ -38,9 +38,10 @@
                       @event-companyName-changed="setCompanyProfileCompanyName"
                       @event-registrationNumber-changed="setCompanyProfileRegistrationNumber"
                       @event-email-changed="setCompanyProfileEmail"
-                      @event-phoneNumber-changed="setCompanyProfilePhoneNumber"
+                      @event-phone-changed="setCompanyProfilePhone"
                       @event-address-changed="setCompanyProfileAddress"
                       @event-www-changed="setCompanyProfileWww"
+                      @event-description-changed="setCompanyProfileDescription"
                   />
                 </div>
                 <!-- Read-only input table when not in edit mode -->
@@ -70,22 +71,25 @@ import CompanyService from "@/services/CompanyService";
 import CompanyViewProfileTable from "@/components/CompanyProfile/CompanyViewProfileTable.vue";
 import CompanyEditProfileTable from "@/components/CompanyProfile/CompanyEditProfileTable.vue";
 
+
 export default {
   name: "CompanyProfileView",
-  components: { CompanyEditProfileTable, CompanyViewProfileTable },
+  components: {CompanyEditProfileTable, CompanyViewProfileTable },
   props: {
     isCompany: Boolean,
   },
   data() {
     return {
+      companyProfileName: '',
       isEditMode: false,
       userId: Number(sessionStorage.getItem('userId')),
       isCompany: true,
+
       companyProfile: {
         companyName: '',
         registrationNumber: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         address: '',
         www: '',
         description: ''
@@ -102,8 +106,8 @@ export default {
     setCompanyProfileEmail(email) {
       this.companyProfile.email = email;
     },
-    setCompanyProfilePhoneNumber(phoneNumber) {
-      this.companyProfile.phoneNumber = phoneNumber;
+    setCompanyProfilePhone(phone) {
+      this.companyProfile.phone = phone;
     },
     setCompanyProfileAddress(address) {
       this.companyProfile.address = address;
@@ -117,28 +121,34 @@ export default {
     startEdit() {
       this.isEditMode = true;
     },
-    async saveEdit() {
-      try {
-        const response = await CompanyService.updateCompanyProfile(this.userId, this.companyProfile);
-        this.companyProfile = { ...response.data };
-        this.isEditMode = false;
-      } catch (error) {
-        console.error('Error saving profile: ', error);
+    saveEdit() {
+      CompanyService.updateCompanyProfile(this.userId, this.companyProfile)
+        .then(response => {
+          this.isEditMode = false;
+
+        })
+          .catch(error => {
+         console.error('Error saving profile: ', error);
         alert('Profiili salvestamisel tekkis viga');
-      }
+      });
     },
-    async getCompanyProfile() {
-      try {
-        const response = await CompanyService.sendGetCompanyProfile(this.userId);
-        this.companyProfile = { ...response.data };
-      } catch (error) {
-        NavigationService.navigateToErrorView();
-      }
+
+    handleGetCompanyProfileResponse(response) {
+      this.companyProfile = response.data;
+      this.companyProfileName = this.companyProfile.companyName
+    },
+
+    getCompanyProfile() {
+      CompanyService.sendGetCompanyProfile(this.userId)
+          .then(response => this.handleGetCompanyProfileResponse(response))
+          .catch(() => NavigationService.navigateToErrorView());
     }
   },
-  async created() {
-    await this.getCompanyProfile();
+  beforeMount() {
+    this.getCompanyProfile()
+
   }
+
 };
 </script>
 
