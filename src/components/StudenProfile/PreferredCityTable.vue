@@ -34,7 +34,8 @@ export default {
   name: "PreferredCityTable",
 
   props:{
-    preferredCities:{},
+    preferredCity{},
+    City:'',
   },
 
   data(){
@@ -44,7 +45,6 @@ export default {
         cityId:'',
         cityName:'',
       },
-
 
       preferredCity: {
         userId:'',
