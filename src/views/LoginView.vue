@@ -28,9 +28,10 @@
         </div>
       </div>
 
-      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6" >Registreeri ettevõte
+      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri ettevõte
       </button>
-      <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur</button>
+      <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur
+      </button>
 
       <div>
       </div>
@@ -44,6 +45,7 @@ import AlertDanger from "@/components/alert/AlertDanger.vue";
 import LoginService from "@/services/LoginService";
 import {HttpStatusCode} from "axios";
 import NavigationService from "@/services/NavigationService";
+import BusinessErrors from "@/errors/BusinessErrors";
 
 export default {
   name: 'LoginView',
@@ -94,7 +96,8 @@ export default {
       } else if (this.loginResponse.roleName === 'student') {
         NavigationService.navigateToStudentProfileView()
       } else if (this.loginResponse.roleName === 'company') {
-        NavigationService.navigateToCompanyProfileView() }
+        NavigationService.navigateToCompanyProfileView()
+      }
     },
 
     updateSessionStorageWithUserDetails() {
@@ -109,7 +112,7 @@ export default {
       if (this.isIncorrectCredentials(httpStatusCode)) {
         this.handleIncorrectCredentialsAlert()
       } else {
-        NavigationServise.navigationToErrorView() // Vaja teha
+        NavigationService.navigationToErrorView() // Vaja teha
       }
     },
 
@@ -131,7 +134,6 @@ export default {
     navigateToStudentRegisterView() {
       NavigationService.navigateToStudentRegisterView()
     },
-
 
 
   }
