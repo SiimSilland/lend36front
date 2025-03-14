@@ -2,7 +2,7 @@
   <div>
     <Modal :modal-is-open="modalIsOpen" @event-close-modal="$emit('event-close-modal')">
       <template #title>
-        Lisa lend
+        Lennu lisamine
       </template>
 
       <template #body>
@@ -62,11 +62,9 @@ export default {
         message: '',
         errorCode: 0
       }
-
     }
   },
   methods: {
-
 
     addGroup() {
       GroupService.sendPostNewGroupRequest(this.newGroup)
