@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="background">
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col">
@@ -37,7 +38,7 @@
           </div>
 
           <button @click="addNewCompany" type="submit" class="btn btn-outline-success">Registreeri</button>
-
+        </div>
         </div>
       </div>
     </div>
@@ -76,7 +77,7 @@ export default {
       if (this.passwordNoMatch()) {
         this.errorMessage = "Paroolid ei kattu"
       } else {
-        CompanyService.sendPostNewCompanyRequest(this.newCompany)
+        UserService.sendPostNewCompanyRequest(this.newCompany)
             .then(() => NavigationService.navigateToLoginView())
 
       }
@@ -86,3 +87,11 @@ export default {
 }
 </script>
 
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>
