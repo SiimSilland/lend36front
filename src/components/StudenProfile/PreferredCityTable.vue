@@ -2,36 +2,27 @@
 
 <template>
   <div>
-    <table class="table table-striped">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        </tbody>
-      </table>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Eelistused asukoha suhtes</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row">{{cityName}}}</th>
+
+      </tr>
+      <tr>
+        <th scope="row"></th>
+
+      </tr>
+      <tr>
+        <th scope="row"></th>
+
+      </tr>
+      </tbody>
     </table>
 
   </div>
@@ -40,6 +31,28 @@
 
 <script>
 export default {
-  name: "PreferredCityTable"
+  name: "PreferredCityTable",
+
+  props:{
+    preferredCities:{},
+  },
+
+  data(){
+    return{
+
+      City: {
+        cityId:'',
+        cityName:'',
+      },
+
+
+      preferredCity: {
+        userId:'',
+        cityId: ''
+      }
+    }
+  }
+
+
 }
 </script>

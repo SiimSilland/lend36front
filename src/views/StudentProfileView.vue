@@ -11,7 +11,7 @@
           <div class="col">
             EELISTUSED ASUKOHA OSAS
             <div class="row">
-              siiapreferredcitytable
+              <PreferredCityTable/>
             </div>
           </div>
           <div class="col">
@@ -107,6 +107,7 @@ export default {
       isEditMode: false,
       userId: Number(sessionStorage.getItem('userId')),
       isStudent: true,
+      cityName:'',
 
       studentProfile: {
         firstName: '',
@@ -120,7 +121,18 @@ export default {
       userImageDto: {
         userId: '',
         userImageData: ''
-      }
+      },
+
+      preferredCity: {
+        userId:'',
+        cityId:''
+      },
+
+      City: {
+        cityId:'',
+        cityName:'',
+      },
+
     }
   },
   methods: {
