@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="background">
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col">
@@ -37,7 +38,7 @@
           </div>
 
           <button @click="addNewCompany" type="submit" class="btn btn-outline-success">Registreeri</button>
-
+        </div>
         </div>
       </div>
     </div>
