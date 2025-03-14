@@ -1,4 +1,5 @@
 <template>
+  <div class="background">
   <div>
 
     <div class="container text-center">
@@ -31,7 +32,7 @@
       <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6" >Registreeri ettevõte
       </button>
       <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur</button>
-
+    </div>
       <div>
       </div>
     </div>
@@ -137,3 +138,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>

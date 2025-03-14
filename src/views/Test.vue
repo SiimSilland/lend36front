@@ -13,46 +13,42 @@
             </div>
           </div>
 
-          <!-- Left Column: Description (Tegevusvaldkond) always visible -->
+          <!-- Left Column: Description -->
           <div class="col-md-6">
             <label for="tegevusvaldkond" class="form-label label-black-bold">Tegevusvaldkond</label>
             <div class="form-floating">
-              <!-- Description textarea is always visible -->
-              <textarea
-                  v-model="companyProfile.description"
-                  class="form-control textarea-fixed"
-                  id="tegevusvaldkond"
-                  :readonly="!isEditMode"
-              ></textarea>
+              <div class="row">
+                <CompanyEditProfileTable
+                    v-if="isEditMode"
+                    :company-profile="companyProfile"
+                    @event-companyDescription-changed="setCompanyProfileDescription"
+                />
+                <CompanyViewProfileTable v-else :company-profile="companyProfile"/>
+              </div>
             </div>
           </div>
 
-          <!-- Right Column: Other Inputs (Company Info) -->
+          <!-- Right Column: Other Inputs -->
           <div class="col-md-6">
             <div class="container">
               <div class="row">
-                <!-- Editable input table when in edit mode -->
-                <div v-if="isEditMode">
-                  <CompanyEditProfileTable
-                      :company-profile="companyProfile"
-                      @event-companyName-changed="setCompanyProfileCompanyName"
-                      @event-registrationNumber-changed="setCompanyProfileRegistrationNumber"
-                      @event-email-changed="setCompanyProfileEmail"
-                      @event-phoneNumber-changed="setCompanyProfilePhoneNumber"
-                      @event-address-changed="setCompanyProfileAddress"
-                      @event-www-changed="setCompanyProfileWww"
-                  />
-                </div>
-                <!-- Read-only input table when not in edit mode -->
-                <div v-else>
-                  <CompanyViewProfileTable :company-profile="companyProfile" />
-                </div>
+                <CompanyEditProfileTable
+                    v-if="isEditMode"
+                    :company-profile="companyProfile"
+                    @event-companyName-changed="setCompanyProfileCompanyName"
+                    @event-registrationNumber-changed="setCompanyProfileRegistrationNumber"
+                    @event-email-changed="setCompanyProfileEmail"
+                    @event-phoneNumber-changed="setCompanyProfilePhoneNumber"
+                    @event-address-changed="setCompanyProfileAddress"
+                    @event-www-changed="setCompanyProfileWww"
+                />
+                <CompanyViewProfileTable v-else :company-profile="companyProfile"/>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Edit/Save Button Section -->
+        <!-- Single Edit/Save Button Section -->
         <div class="row mt-4">
           <div class="col text-center">
             <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda</button>
@@ -177,5 +173,4 @@ export default {
 .textarea-fixed {
   height: 100px;
 }
-
 </style>

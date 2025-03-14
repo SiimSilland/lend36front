@@ -1,4 +1,5 @@
 <template>
+  <div class="background">
   <div>
     <div class="container text-center">
       <div class="row justify-content-center">
@@ -33,6 +34,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -75,4 +77,11 @@ export default {
 }
 </script>
 
-
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>

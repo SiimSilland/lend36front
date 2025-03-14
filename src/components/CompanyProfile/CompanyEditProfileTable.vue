@@ -4,7 +4,7 @@
       <tbody>
       <tr>
         <th scope="row">Nimi</th>
-        <td><input :value="companyProfile.nimi"
+        <td><input :value="companyProfile.companyName"
                    @input="$emit('event-companyName-changed', $event.target.value)"
         >
         </td>
@@ -33,7 +33,7 @@
       </tr>
       <tr>
         <th scope="row">Telefon</th>
-        <td> <input :value="companyProfile.phone"
+        <td> <input :value="companyProfile.phoneNumber"
                     @input="$emit('event-phone-changed', $event.target.value)"
         > </td>
       </tr>
@@ -48,8 +48,10 @@
       </tr>
       <tr>
         <th scope="row">description</th>
-        <td colspan="2"> <input :value="companyProfile.description"
-                                @input="$emit('description-changed', $event.target.value)"> </td>
+        <td colspan="2">
+          <input
+              :value="companyProfile.description"
+              @input="$emit('description-changed', $event.target.value)"> </td>
       </tr>
 
 
