@@ -16,6 +16,10 @@
                   @event-remove-city="handleRemoveCity"
               />
             </div>
+            <div class="row">
+              <button @click="openAddCityModal" type="submit" class="btn btn-outline-success">Lisa asukohti</button>
+            </div>
+
           </div>
           <div class="col">
             <div class="row">Lühitutvustus</div>
