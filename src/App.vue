@@ -44,6 +44,7 @@ export default {
       isAdmin: false,
       isStudent: false,
       isCompany: false,
+      isInternship: false
     }
   },
 
