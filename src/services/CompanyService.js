@@ -17,6 +17,9 @@
         });
         },
     sendPutNewInternshipRequest(internship) {
-        return axios.put('/company/internship', internship);
+        return axios.put('/company/internship', internship, {
+            params:{
+                userId: userId }
+        });
         },
     }

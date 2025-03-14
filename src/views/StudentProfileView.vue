@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isStudent">
+  <div class="background">
+<div v-if="isStudent">
     <div class="row">
       <div class="col">
         <h1> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
@@ -51,6 +52,7 @@
         </div>
       </div>
     </div>
+</div>
     <div>
       <div class="container text-center">
         <div class="row align-items-start">
@@ -71,10 +73,8 @@
 
     </div>
   </div>
-  <div v-else class="unauthorized-message">
-    <h2> Juurdepääs keelatud </h2>
-    <p>Teil pole selle lehe vaatamiseks õiguse.</p>
-  </div>
+  <h2> Juurdepääs keelatud </h2>
+  <p>Teil pole selle lehe vaatamiseks õiguse.</p>
 </template>
 <script>
 
@@ -228,3 +228,11 @@ export default {
 
 </script>
 
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>
