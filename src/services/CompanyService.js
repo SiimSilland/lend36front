@@ -1,29 +1,22 @@
     import axios from "axios";
 
     export default {
-        async updateCompanyProfile(userId, companyProfile) {
-            try {
-                const response = await axios.put('/company/profile', {
+    updateCompanyProfile(userId, companyProfile) {
+        return axios.put('/company/profile/update', companyProfile, {
+                params: {
                     userId: userId,
-                    ...companyProfile
-                });
-                return response;
-            } catch (error) {
-                throw error;
+                }
             }
+           )
         },
-
-        async sendGetCompanyProfile(userId) {
-            try {
-                const response = await axios.get('/company/profile', {
-                    params: { userId }
-                });
-                return response;
-            } catch (error) {
-                throw error;
-            }
+    sendGetCompanyProfile(userId) {
+        return  axios.get('/company/profile', {
+                    params: {
+                        userId: userId
+                    }
+        });
         },
-        sendPostNewInternshipRequest(internship) {
-            return axios.post('/company/internship', internship);
+    sendPostNewInternshipRequest(internship) {
+        return axios.post('/company/internship', internship);
         },
     }
