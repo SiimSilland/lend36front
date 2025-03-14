@@ -11,7 +11,7 @@
           <div class="col">
             <div class="row">
               <PreferredCityTable
-                  :preferred-cities="preferredCity"
+                  :preferred-cities="studentPreferredCities"
                   :cities="cityDropdown"
                   @event-remove-city="handleRemoveCity"
               />
@@ -125,7 +125,12 @@ export default {
         userImageData: ''
       },
 
-      preferredCity: [],
+      studentPreferredCities: [
+        {
+          userId: 0,
+          cityId: 0
+        }
+      ],
 
       cityDropdown: [],
 
@@ -186,42 +191,36 @@ export default {
       UserImageService.sendDeleteUserImage(this.userId)
     },
 
-    sendGetPreferredCityList() {
+    getStudentPreferredCities() {
       PreferredCityService.sendGetPreferredCityList(this.userId)
           .then(response => {
-            this.preferredCity = response.data;
+            this.studentPreferredCities = response.data;
           })
           .catch(() => NavigationService.navigateToErrorView());
     },
     handleRemoveCity(cityId) {
       PreferredCityService.sendDeletePreferredCity(this.userId, cityId)
-          .then(() => {
-            // Remove the city from local array after successful deletion
-            this.preferredCity = this.preferredCity.filter(
-                city => city.cityId !== cityId
-            );
-          })
+          .then(() => this.getStudentPreferredCities())
           .catch(error => {
             console.error('Error removing city:', error);
             alert('Linna eemaldamisel tekkis viga');
           });
-    }
+    },
 
-  },
-
-  sendGetCityList() {
-    CityService.sendGetCities()
-        .then(response => {
-          this.cityDropdown = response.data; // Array of {cityId, cityName}
-        })
-        .catch(() => NavigationService.navigateToErrorView());
+    sendGetCityList() {
+      CityService.sendGetCities()
+          .then(response => {
+            this.cityDropdown = response.data; // Array of {cityId, cityName}
+          })
+          .catch(() => NavigationService.navigateToErrorView());
+    },
   },
 
 
   beforeMount() {
     this.getStudentProfile()
     this.getUserImage()
-    this.sendGetPreferredCityList()
+    this.getStudentPreferredCities()
     this.sendGetCityList()
 
   }
