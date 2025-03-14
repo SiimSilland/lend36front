@@ -8,7 +8,16 @@ export default {
                 userId: userId
             }
         })
+    },
+    sendDeletePreferredCity(userId, cityId) {
+        return axios.delete('/preferred-city/city', {
+            params: {
+                userId: userId,
+                cityId: cityId
+            }
+        });
     }
+
 
 
 }

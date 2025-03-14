@@ -1,38 +1,40 @@
 <template>
   <div class="background">
-  <div>
+    <div>
 
-    <div class="container text-center">
+      <div class="container text-center">
 
-      <div class="row justify-content-center">
-        <div class="col col-8">
-          <AlertDanger :message="message"/>
-        </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col col-4">
-          <div>
-            <div class="mb-3">
-              <label class="form-label">e-post</label>
-              <input v-model="email" type="text" class="form-control">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">parool</label>
-              <input v-model="password" type="text" class="form-control">
-            </div>
-
-            <button @click="login" type="submit" class="btn btn-primary me-3">Logi sisse</button>
-
+        <div class="row justify-content-center">
+          <div class="col col-8">
+            <AlertDanger :message="message"/>
           </div>
         </div>
-      </div>
 
-      <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6" >Registreeri ettevõte
-      </button>
-      <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur</button>
-    </div>
+        <div class="row justify-content-center">
+          <div class="col col-4">
+            <div>
+              <div class="mb-3">
+                <label class="form-label">e-post</label>
+                <input v-model="email" type="text" class="form-control">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">parool</label>
+                <input v-model="password" type="text" class="form-control">
+              </div>
+
+              <button @click="login" type="submit" class="btn btn-primary me-3">Logi sisse</button>
+
+            </div>
+          </div>
+        </div>
+
+        <button @click="navigateToCompanyRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri
+          ettevõte
+        </button>
+        <button @click="navigateToStudentRegisterView" type="submit" class="btn btn-secondary me-6">Registreeri õppur
+        </button>
+      </div>
       <div>
       </div>
     </div>
@@ -45,6 +47,7 @@ import AlertDanger from "@/components/alert/AlertDanger.vue";
 import LoginService from "@/services/LoginService";
 import {HttpStatusCode} from "axios";
 import NavigationService from "@/services/NavigationService";
+import BusinessErrors from "@/errors/BusinessErrors";
 
 export default {
   name: 'LoginView',
@@ -95,7 +98,8 @@ export default {
       } else if (this.loginResponse.roleName === 'student') {
         NavigationService.navigateToStudentProfileView()
       } else if (this.loginResponse.roleName === 'company') {
-        NavigationService.navigateToCompanyProfileView() }
+        NavigationService.navigateToCompanyProfileView()
+      }
     },
 
     updateSessionStorageWithUserDetails() {
@@ -110,7 +114,7 @@ export default {
       if (this.isIncorrectCredentials(httpStatusCode)) {
         this.handleIncorrectCredentialsAlert()
       } else {
-        NavigationServise.navigationToErrorView() // Vaja teha
+        NavigationService.navigationToErrorView() // Vaja teha
       }
     },
 
@@ -132,8 +136,6 @@ export default {
     navigateToStudentRegisterView() {
       NavigationService.navigateToStudentRegisterView()
     },
-
-
 
   }
 }

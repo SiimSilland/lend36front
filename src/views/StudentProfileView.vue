@@ -9,28 +9,27 @@
       <div class="container text-center">
         <div class="row align-items-start">
           <div class="col">
-            EELISTUSED ASUKOHA OSAS
             <div class="row">
-              <PreferredCityTable/>
+              <PreferredCityTable
+                  :preferred-cities="preferredCity"
+                  :cities="cityDropdown"
+                  @event-remove-city="handleRemoveCity"
+              />
             </div>
           </div>
           <div class="col">
-
             <div class="row">Lühitutvustus</div>
             <div class="row">(SIIA LÜHITUTVUSTUS)</div>
-
           </div>
           <div class="col">
             <div class="row">
-             <UserImage :user-image-data="userImageDto.userImageData"/>
+              <UserImage :user-image-data="userImageDto.userImageData"/>
             </div>
             <div class="row">
-
               <h3>
                 <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt</button>
               </h3>
               <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
-
             </div>
             <div class="row">
               <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
@@ -38,8 +37,6 @@
                                        @event-phone-changed="setStudentProfilePhone"
                                        @event-email-changed="setStudentProfileEmail"
                                        @event-linkedin-changed="setStudentProfileLinkedin"
-
-
               />
               <StudentProfileTable v-else :student-profile="studentProfile"/>
               <h3>
@@ -48,12 +45,8 @@
 
                 <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
                 </button>
-
-                <button type="button" class="btn btn-outline-primary">Lisa CV</button>
               </h3>
-
             </div>
-
           </div>
         </div>
       </div>
@@ -62,7 +55,6 @@
       <div class="container text-center">
         <div class="row align-items-start">
           <div class="col">
-
             <div class="row">Eelistatud praktika algus</div>
             <div class="row">(SIIA KALENDER)</div>
           </div>
@@ -70,7 +62,9 @@
             <h3>Tühi column</h3>
           </div>
           <div class="col">
-            <h3>Tühi column</h3>
+            <ImageInput :display-cv="cvFileData" @event-new-cv-posted="sendPostCv"/>
+
+            <button type="button" class="btn btn-outline-primary">Lisa CV</button>
           </div>
         </div>
       </div>
@@ -97,7 +91,13 @@ import CityService from "@/services/CityService";
 
 export default {
   name: 'StudentProfileView',
-  components: {ImageInput, UserImage, PreferredCityTable, StudentEditProfileTable, StudentProfileTable: StudentViewProfileTable},
+  components: {
+    ImageInput,
+    UserImage,
+    PreferredCityTable,
+    StudentEditProfileTable,
+    StudentProfileTable: StudentViewProfileTable
+  },
   props: {
     isStudent: Boolean,
 
@@ -109,7 +109,7 @@ export default {
       isEditMode: false,
       userId: Number(sessionStorage.getItem('userId')),
       isStudent: true,
-      cityName:'',
+      cityName: '',
 
       studentProfile: {
         firstName: '',
@@ -125,15 +125,14 @@ export default {
         userImageData: ''
       },
 
-      preferredCity: {
-        userId:'',
-        cityId:''
-      },
+      preferredCity: [],
 
-      cityDropdown: {
-        cityId:'',
-        cityName:'',
-      },
+      cityDropdown: [],
+
+      cvFileData: {
+        userId: '',
+        cvData: '',
+      }
 
     }
   },
@@ -178,28 +177,47 @@ export default {
           .catch(() => NavigationService.navigateToErrorView());
     },
 
-    sendPostUserImage(imageData){
+    sendPostUserImage(imageData) {
       this.userImageDto.userImageData = imageData
       UserImageService.sendPostUserImage(this.userId, this.userImageDto)
     },
 
-    sendDeleteUserImage(){
+    sendDeleteUserImage() {
       UserImageService.sendDeleteUserImage(this.userId)
     },
 
-    sendGetPreferredCityList(){
+    sendGetPreferredCityList() {
       PreferredCityService.sendGetPreferredCityList(this.userId)
-          .then(response => this.preferredCity = response.data)
+          .then(response => {
+            this.preferredCity = response.data;
+          })
           .catch(() => NavigationService.navigateToErrorView());
     },
-
-    sendGetCityList(){
-    CityService.sendGetCities()
-      .then(response => this.cityDropdown= response.data)
-        .catch(() => NavigationService.navigateToErrorView());
+    handleRemoveCity(cityId) {
+      PreferredCityService.sendDeletePreferredCity(this.userId, cityId)
+          .then(() => {
+            // Remove the city from local array after successful deletion
+            this.preferredCity = this.preferredCity.filter(
+                city => city.cityId !== cityId
+            );
+          })
+          .catch(error => {
+            console.error('Error removing city:', error);
+            alert('Linna eemaldamisel tekkis viga');
+          });
     }
 
   },
+
+  sendGetCityList() {
+    CityService.sendGetCities()
+        .then(response => {
+          this.cityDropdown = response.data; // Array of {cityId, cityName}
+        })
+        .catch(() => NavigationService.navigateToErrorView());
+  },
+
+
   beforeMount() {
     this.getStudentProfile()
     this.getUserImage()
