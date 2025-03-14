@@ -60,46 +60,46 @@
             </header>
 
             <ul class="projects">
-              <li class="project-item" v-for="(project, index) in projects" :key="index">
+              <li class="project-item" v-for="(students, index) in students" :key="index">
                 <div class="logo-row">
-                  <img :src="project.logoSrc" :alt="project.title + ' pilt'" />
+                  <img :src="students.logoSrc" :alt="students.title + ' pilt'" />
                   <div class="icon">
                     <i class="fa fa-ellipsis-h icon" aria-hidden="true"></i>
                   </div>
                 </div>
                 <div class="title-row">
-                  <h3>{{ project.title }}</h3>
+                  <h3>{{ students.title }}</h3>
                   <div class="links">
                     <i class="fa fa-external-link icon" aria-hidden="true"></i>
-                    <a :href="project.linkedin">{{ project.linkedin }}</a>
+                    <a :href="students.linkedin">{{ students.linkedin }}</a>
                   </div>
                 </div>
                 <div class="desc-row">
-                  <p>{{ project.description }}</p>
+                  <p>{{ students.description }}</p>
                 </div>
                 <div class="progress-row">
                   <p
                       class="value-label"
-                      :style="{ width: project.progress + '%' }"
-                      :data-value="project.progress"
+                      :style="{ width: students.progress + '%' }"
+                      :data-value="students.progress"
                   ></p>
                   <progress
                       max="100"
-                      :value="project.progress"
-                      :data-value="project.progress"
-                      :class="{ low: project.progress < 40 }"
+                      :value="students.progress"
+                      :data-value="students.progress"
+                      :class="{ low: students.progress < 40 }"
                   >
-                    {{ project.progress }}%
+                    {{ students.progress }}%
                   </progress>
                 </div>
                 <div class="footer-row">
-                  <div :class="['days', project.status]">
+                  <div :class="['days', students.status]">
                     <i class="fa fa-clock-o icon" aria-hidden="true"></i>
-                    {{ project.daysLeft }} days left
+                    {{ students.daysLeft }} days left
                   </div>
                   <div class="users">
                     <img
-                        v-for="(user, idx) in project.users"
+                        v-for="(user, idx) in students.users"
                         :key="idx"
                         :src="user.avatar"
                         :alt="user.name"
@@ -121,7 +121,7 @@ export default {
   name: "CompanyStudentsView",
   data() {
     return {
-      projects: [
+      students: [
         {
           title: "Peeter Põder",
           piltSrc: "https://source.unsplash.com/48x48/?brands",

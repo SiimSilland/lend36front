@@ -106,6 +106,9 @@ export default {
   text-align: left; /* Aligns text to the left */
 }
 
+.row {
+  margin-top: 1cm;
+}
 /* Align lists to the left */
 .left-align-list {
   text-align: left;
