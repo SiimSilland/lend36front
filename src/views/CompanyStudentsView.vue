@@ -36,14 +36,14 @@
                 <input
                     type="text"
                     name="search"
-                    placeholder="Search a project"
+                    placeholder="Otsi tudengit"
                     class="search-text"
                 />
               </div>
 
               <div class="app-list-options">
                 <div class="sort-dropdown">
-                  Sort by <span class="by">Project progress</span>
+                  Sort by <span class="by">Regioon</span>
                   <i class="fa fa-sort-amount-desc" aria-hidden="true"></i>
                   <div class="drop">
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -62,7 +62,7 @@
             <ul class="projects">
               <li class="project-item" v-for="(project, index) in projects" :key="index">
                 <div class="logo-row">
-                  <img :src="project.logoSrc" :alt="project.title + ' logo'" />
+                  <img :src="project.logoSrc" :alt="project.title + ' pilt'" />
                   <div class="icon">
                     <i class="fa fa-ellipsis-h icon" aria-hidden="true"></i>
                   </div>
@@ -71,7 +71,7 @@
                   <h3>{{ project.title }}</h3>
                   <div class="links">
                     <i class="fa fa-external-link icon" aria-hidden="true"></i>
-                    <a :href="project.website">{{ project.website }}</a>
+                    <a :href="project.linkedin">{{ project.linkedin }}</a>
                   </div>
                 </div>
                 <div class="desc-row">
@@ -123,9 +123,9 @@ export default {
     return {
       projects: [
         {
-          title: "Sports Interactive",
-          logoSrc: "https://source.unsplash.com/48x48/?brands",
-          website: "sportsinteractive.com",
+          title: "Peeter Põder",
+          piltSrc: "https://source.unsplash.com/48x48/?brands",
+          linkedin: "linkedin.com/in/peeter-poder",
           description: "Web resource which contains all about transfer in the world of sports.",
           progress: 94,
           daysLeft: 2,
@@ -136,9 +136,9 @@ export default {
           ]
         },
         {
-          title: "Homechoice",
-          logoSrc: "https://source.unsplash.com/48x48/?brand",
-          website: "homechoice.com",
+          title: "Juhan Aas",
+          piltSrc: "https://source.unsplash.com/48x48/?brand",
+          linkedin: "linkedin.com/in/juhan-aas",
           description: "Web resource which contains all about transfer in the world of sports.",
           progress: 64,
           daysLeft: 4,
@@ -149,9 +149,9 @@ export default {
           ]
         },
         {
-          title: "Big Money Real Estate",
-          logoSrc: "https://source.unsplash.com/48x48/?icon",
-          website: "bigmoneyrealestate.com",
+          title: "Mari Mets",
+          piltSrc: "https://source.unsplash.com/48x48/?icon",
+          linkedin: "linkedin.com/in/mari-mets",
           description: "Web resource which contains all about transfer in the world of sports.",
           progress: 59,
           daysLeft: 5,
@@ -162,9 +162,9 @@ export default {
           ]
         },
         {
-          title: "Springfield Media",
+          title: "Lea Ots",
           logoSrc: "https://source.unsplash.com/48x48/?adventure",
-          website: "springfieldmedia.com",
+          linkedin: "linkedin.com/in/lea-ots",
           description: "Web resource which contains all about transfer in the world of sports.",
           progress: 94,
           daysLeft: 7,
