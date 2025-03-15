@@ -47,11 +47,6 @@
     </div>
 
   </div>
-<!-- todo: 3 -->
-<!-- todo: ehita table dünaamiliselt kasutades students massiivi -->
-<!-- todo: loos uus modal õpilase lisamiseks -->
-<!-- todo: loo nupp modali avamiseks -->
-<!-- todo: propsiga anna kaasa groupId-->
 
 </template>
 
