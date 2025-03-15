@@ -16,10 +16,23 @@
                     }
         });
         },
-    sendPutNewInternshipRequest(internship) {
-        return axios.put('/company/internship', internship, {
-            params:{
-                userId: userId }
-        });
-        },
+
+
+        sendPostNewInternshipRequest(newInternship) {
+                return axios.post('/company/internship', newInternship
+                );
+            },
+        }
+
+        /*
+
+         sendNewInternshipRequest(internship, userId) {
+            return axios.post(`/company/internship?userId=${userId}`, internship, {
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+
     }
+
+
+        */

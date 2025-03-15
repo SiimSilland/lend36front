@@ -1,120 +1,126 @@
 <template>
   <div>
     <div class="background">
-      <div class="company-profile-page">
+      <AddInternshipModal
+          :modal-is-open="modalIsOpen"
+          @event-group-added="getInternships"
+          @event-close-modal="closeAddInternshipModal"
+      />
+
+        <div class="company-profile-page">
         <div class="container text-center-left">
           <div class="row justify-content-center">
             <h1 class="title">Praktikavõimalused</h1>
+            <table class="table table-responsive table-hover">
+              <thead>
+              <tr>
+                <th scope="col">Praktika positsioon</th>
+                <th scope="col">Kirjeldus</th>
+                <th scope="col">Praktika koordinaator</th>
+                <th scope="col">email</th>
+              </tr>
+              </thead>
+              <tbody class="table-group-divider">
 
-            <!-- Show edit form when in edit mode -->
-            <div v-if="isEditMode">
-              <InternshipEditTable
-                  :newInternship="newInternship"
-                  @event-title-changed="setInternshipTitle"
-                  @event-description-changed="setInternshipDescription"
-                  @event-name-changed="setInternshipName"
-                  @event-email-changed="setInternshipEmail"
-              />
-            </div>
+              <tr v-for="internship in internships" :key="internship.title">
+                <td>{{ internship.title }}</td>
+                <td>{{ internship.description }}</td>
+                <td>{{ internship.name }}</td>
+                <td>{{ internship.email }}</td>
+                <td><button class="btn btn-warning btn-sm" @click="editInternship(internship)"><i class="fas fa-edit"></i>Muuda</button>
+                  <button class="btn btn-danger btn-sm" @click="deleteInternship(internship)"><i class="fas fa-trash"></i> Kustuta</button>
 
-            <!-- Show view-only table when not in edit mode -->
-            <div v-else>
-              <InternshipViewTable :newInternship="newInternship" />
-            </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
 
-          <!-- Edit/Save Buttons -->
-          <div class="col text-center">
-            <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda</button>
-            <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta</button>
+        </div>
+          <div class="col">
+            <button @click="openAddInternshipModal" type="submit" class="btn btn-outline-success">Lisa praktika</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
-import CompanyService from "@/services/CompanyService";
-import InternshipViewTable from "@/components/Internship/InternshipViewTable.vue";
-import InternshipEditTable from "@/components/Internship/InternshipEditTable.vue";
 
+import NavigationService from "@/services/NavigationService";
+import axios from "axios";
+import AddInternshipModal from "@/components/modal/AddInternshipModal.vue";
 export default {
   name: "CompanyInternshipView",
-  components: { InternshipEditTable, InternshipViewTable },
+  components: {AddInternshipModal },
   data() {
     return {
-      isEditMode: false,
-      newInternship: {
-        title: '',
-        description: '',
-        name: '',
-        email: ''
-      }
+      modalIsOpen: false,
+      isEdit: false,
+      successMessage: '',
+      errorMessage: '',
+
+      internships: []
+
     };
   },
   methods: {
-    setInternshipTitle(title) {
-      this.newInternship.title = title;
-    },
-    setInternshipDescription(description) {
-      this.newInternship.description = description;
-    },
-    setInternshipEmail(email) {
-      this.newInternship.email = email;
-    },
-    setInternshipName(name) {
-      this.newInternship.name = name;
-    },
 
-    startEdit() {
-      this.isEditMode = true;
-    },
-
-    saveEdit() {
-      CompanyService.sendPutNewInternshipRequest(this.newInternship)
-          .then(response  => {
-            this.isEditMode = false;
+    getInternships() {
+      axios.get('/company/internships')
+          .then(response => {
+            this.internships = response.data
           })
-          .catch(error => {
-            console.error('Error saving internship: ', error);
-            alert('Praktika salvestamisel tekkis viga');
-          });
-    }
+          .catch(() => {
+            NavigationService.navigateToErrorView()
+          })
+    },
+    editInternship(internship) {
+      console.log("Edit internship:", internship);
+      this.modalIsOpen = true;
+      this.newInternship = { ...internship }; // Pre-fill the modal with selected internship
+    },
+
+    deleteInternship(internship) {
+      if (confirm("Are you sure you want to delete this internship?")) {
+        axios.delete(`/company/internships/${internship.id}`)
+            .then(() => {
+              this.getInternships(); // Refresh after delete
+            })
+            .catch(error => {
+              console.error("Error deleting internship:", error);
+            });
+      }
+    },
+    openAddInternshipModal() {
+      this.modalIsOpen = true
+    },
+
+    validateIsCompany() {
+      const roleName = sessionStorage.getItem('roleName');
+      this.isCompany = roleName === 'company'; // Fix capitalization
+    },
+
+    closeAddInternshipModal() {
+      this.modalIsOpen = false
+    },
+
   },
 
-};
+
+  beforeMount() {
+    this.validateIsCompany()
+    this.getInternships()
+  }
+}
 </script>
 
 <style scoped>
 .background {
-  background-image: url("@/assets/img.png");
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 20px;
 }
 
-.company-profile-page {
-  padding: 20px;
-  color: white;
-}
-
-.title {
-  color: black;
-}
-
-input, textarea {
-  color: black;
-}
-
-.form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.spacer {
-  margin-top: 30px;
-}
 </style>

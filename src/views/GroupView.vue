@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="background">
     <AddGroupModal :modal-is-open="modalIsOpen"
                    @event-group-added="getGroups"
                    @event-close-modal="closeAddGroupModal"
@@ -38,6 +39,7 @@
         <button @click="openAddGroupModal" type="submit" class="btn btn-outline-success">Lisa lend</button>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -111,3 +113,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.background {
+  background-image: url("@/assets/img.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+</style>

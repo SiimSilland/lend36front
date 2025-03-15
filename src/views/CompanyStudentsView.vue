@@ -518,6 +518,7 @@ body {
   justify-content: flex-start;
   margin: 20px 0 10px;
 }
+
 .projects .project-item .title-row h3 {
   font-weight: bold;
   margin-top: 0;
