@@ -2,7 +2,7 @@
   <div>
     <Modal :modal-is-open="modalIsOpen" @event-close-modal="$emit('event-close-modal')">
       <template #title>
-        Praktikakoha lisamne
+        Praktikakoha lisamine
       </template>
 
       <template #body>
