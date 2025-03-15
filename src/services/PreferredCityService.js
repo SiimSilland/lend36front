@@ -16,6 +16,15 @@ export default {
                 cityId: cityId
             }
         });
+    },
+
+    sendPostPreferredCity(userId, cityId){
+        return axios.post('/preferred-city/city', {
+            params:{
+                userId: userId,
+                cityId: cityId
+            }
+        })
     }
 
 

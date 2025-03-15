@@ -1,5 +1,11 @@
 <template>
   <div v-if="isStudent">
+    <AddCityModal
+                  :modal-is-open="modalIsOpen"
+                  :cityDropdown="citiesList"
+                  @event-new-city-added="handleAddCity"
+                  @event-close-modal="closeAddCityModal"
+    />
     <div class="row">
       <div class="col">
         <h1> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
@@ -12,7 +18,7 @@
             <div class="row">
               <PreferredCityTable
                   :preferred-cities="studentPreferredCities"
-                  :cities="cityDropdown"
+                  :cities="citiesList"
                   @event-remove-city="handleRemoveCity"
               />
             </div>
@@ -92,10 +98,12 @@ import ImageInput from "@/components/image/ImageInput.vue";
 import UserImageService from "@/services/UserImageService";
 import PreferredCityService from "@/services/PreferredCityService";
 import CityService from "@/services/CityService";
+import AddCityModal from "@/components/modal/AddCityModal.vue";
 
 export default {
   name: 'StudentProfileView',
   components: {
+    AddCityModal,
     ImageInput,
     UserImage,
     PreferredCityTable,
@@ -113,6 +121,7 @@ export default {
       isEditMode: false,
       userId: Number(sessionStorage.getItem('userId')),
       isStudent: true,
+      modalIsOpen: false,
       cityName: '',
 
       studentProfile: {
@@ -136,7 +145,7 @@ export default {
         }
       ],
 
-      cityDropdown: [],
+      citiesList: [],
 
       cvFileData: {
         userId: '',
@@ -211,13 +220,40 @@ export default {
           });
     },
 
+    handleAddCity(cityId){
+      PreferredCityService.sendPostPreferredCity(this.userId, cityId)
+          .then(() => {
+            this.getStudentPreferredCities();
+            this.closeAddCityModal();
+
+              }
+          )
+          .catch(error => {
+            console.error('Error adding city', error);
+            alert('Linna lisamisel tekkis viga');
+          })
+
+    },
+
+
     sendGetCityList() {
       CityService.sendGetCities()
           .then(response => {
-            this.cityDropdown = response.data; // Array of {cityId, cityName}
+            this.citiesList = response.data; // Array of {cityId, cityName}
           })
           .catch(() => NavigationService.navigateToErrorView());
     },
+
+    openAddCityModal(){
+      this.modalIsOpen = true
+
+    },
+
+    closeAddCityModal(){
+      this.modalIsOpen = false
+    }
+
+
   },
 
 
