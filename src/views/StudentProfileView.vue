@@ -1,90 +1,109 @@
 <template>
-  <div v-if="isStudent">
-    <AddCityModal
-                  :modal-is-open="modalIsOpen"
-                  :cityDropdown="cityDropdown"
-                  @event-new-city-added="handleAddCity"
-                  @event-close-modal="closeAddCityModal"
-    />
-    <div class="row">
-      <div class="col">
-        <h1> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
+
+    <div v-if="isStudent">
+      <AddCityModal
+          :modal-is-open="modalIsOpen"
+          :cityDropdown="cityDropdown"
+          @event-new-city-added="handleAddCity"
+          @event-close-modal="closeAddCityModal"
+      />
+      <div class="row">
+        <div class="col">
+          <h1 class="title"> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
+        </div>
       </div>
-    </div>
-    <div>
-      <div class="container text-center">
-        <div class="row align-items-start">
-          <div class="col">
-            <div class="row">
-              <PreferredCityTable
-                  :preferred-cities="studentPreferredCities"
-                  :cities="cityDropdown"
-                  @event-remove-city="handleRemoveCity"
-              />
-            </div>
-            <div class="row">
-              <button @click="openAddCityModal" type="submit" class="btn btn-outline-success">Lisa asukohti</button>
-            </div>
+      <div>
+        <div class="container text-center">
+          <div class="row align-items-start">
+            <div class="col">
+              <div class="row">
+                <PreferredCityTable
+                    :preferred-cities="studentPreferredCities"
+                    :cities="cityDropdown"
+                    @event-remove-city="handleRemoveCity"
+                />
+              </div>
+              <div class="row">
+                <button @click="openAddCityModal" type="submit" class="btn btn-outline-success">Lisa asukohti</button>
+              </div>
 
-          </div>
-          <div class="col">
-            <div class="row">Lühitutvustus</div>
-            <div class="row">(SIIA LÜHITUTVUSTUS)</div>
-          </div>
-          <div class="col">
-            <div class="row">
-              <UserImage :user-image-data="userImageDto.userImageData"/>
             </div>
-            <div class="row">
-              <h3>
-                <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt</button>
-              </h3>
-              <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
-            </div>
-            <div class="row">
-              <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
-                                       @event-address-changed="setStudentProfileAddress"
-                                       @event-phone-changed="setStudentProfilePhone"
-                                       @event-email-changed="setStudentProfileEmail"
-                                       @event-linkedin-changed="setStudentProfileLinkedin"
-              />
-              <StudentProfileTable v-else :student-profile="studentProfile"/>
-              <h3>
-                <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
-                </button>
+            <div class="col">
+              <div class="row">
+                <div class="col-md-30">
+                  <label for="Lühitutvustus" class="form-label label-black-bold">Lühitutvustus</label>
+                  <div class="form-floating">
+                    <!-- Description textarea is always visible -->
+                    <textarea
+                        v-model="studentProfile.intro"
+                        class="form-control textarea-fixed"
+                        id="tegevusvaldkond"
+                        :readonly="!isEditMode"
+                    ></textarea>
+                  </div>
+                </div>
 
-                <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
-                </button>
-              </h3>
+
+              </div>
+            </div>
+            <div class="col">
+              <div class="row">
+                <UserImage :user-image-data="userImageDto.userImageData"/>
+              </div>
+              <div class="row">
+                <h3>
+                  <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt
+                  </button>
+                </h3>
+                <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
+              </div>
+              <div class="row">
+                <StudentEditProfileTable v-if="isEditMode" :student-profile="studentProfile"
+                                         @event-address-changed="setStudentProfileAddress"
+                                         @event-phone-changed="setStudentProfilePhone"
+                                         @event-email-changed="setStudentProfileEmail"
+                                         @event-linkedin-changed="setStudentProfileLinkedin"
+                />
+                <StudentProfileTable v-else :student-profile="studentProfile"/>
+                <h3>
+                  <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+                  </button>
+
+                  <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">
+                    Salvesta
+                  </button>
+                </h3>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="container text-center">
-        <div class="row align-items-start">
-          <div class="col">
-            <div class="row">Eelistatud praktika algus</div>
-            <div class="row">(SIIA KALENDER)</div>
-          </div>
-          <div class="col">
-            <h3>Tühi column</h3>
-          </div>
-          <div class="col">
-            <ImageInput :display-cv="cvFileData" @event-new-cv-posted="sendPostCv"/>
+      <div>
+        <div class="container text-center">
+          <div class="row align-items-start">
+            <div class="col">
+              <div class="row">Eelistatud praktika algus</div>
+              <div class="row">(SIIA KALENDER)</div>
+            </div>
+            <div class="col">
+              <h3>Tühi column</h3>
+            </div>
+            <div class="col">
+              <ImageInput :display-cv="cvFileData" @event-new-cv-posted="sendPostCv"/>
 
-            <button type="button" class="btn btn-outline-primary">Lisa CV</button>
+              <button type="button" class="btn btn-outline-primary">Lisa CV</button>
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
-  <div v-else class="unauthorized-message">
-    <h2> Juurdepääs keelatud </h2>
-    <p>Teil pole selle lehe vaatamiseks õiguse.</p>
-  </div>
+
+    <div v-else class="unauthorized-message">
+      <h2> Juurdepääs keelatud </h2>
+      <p>Teil pole selle lehe vaatamiseks õiguse.</p>
+    </div>
+
 </template>
 <script>
 
@@ -130,7 +149,8 @@ export default {
         address: '',
         phone: '',
         linkedin: '',
-        email: ''
+        email: '',
+        intro: ''
       },
 
       userImageDto: {
@@ -147,8 +167,8 @@ export default {
 
       cityDropdown: [
         {
-         cityId: 0,
-         cityName: 0
+          cityId: 0,
+          cityName: 0
         }
       ],
 
@@ -225,11 +245,11 @@ export default {
           });
     },
 
-    handleAddCity(cityId){
+    handleAddCity(cityId) {
       PreferredCityService.sendPostPreferredCity(this.userId, cityId)
           .then(() => {
-            this.getStudentPreferredCities();
-            this.closeAddCityModal();
+                this.getStudentPreferredCities();
+                this.closeAddCityModal();
 
               }
           )
@@ -249,12 +269,12 @@ export default {
           .catch(() => NavigationService.navigateToErrorView());
     },
 
-    openAddCityModal(){
+    openAddCityModal() {
       this.modalIsOpen = true
 
     },
 
-    closeAddCityModal(){
+    closeAddCityModal() {
       this.modalIsOpen = false
     }
 
@@ -273,3 +293,41 @@ export default {
 
 </script>
 
+<style scoped>
+.background {
+  background-image: url('@/assets/img.png'); /* Use require() if needed */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.company-landing-page {
+  padding: 20px;
+  color: white;
+}
+
+.title {
+  color: black; /* Change the heading color to black */
+}
+
+/* Style for text boxes */
+.text-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  margin: 10px;
+  text-align: left; /* Aligns text to the left */
+}
+
+/* Align lists to the left */
+.left-align-list {
+  text-align: left;
+  padding-left: 20px; /* Adjust for better indentation */
+  list-style-type: disc; /* Ensures bullets appear */
+}
+
+.left-align-list ul {
+  padding-left: 20px; /* Nested list indentation */
+}
+</style>
