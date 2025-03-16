@@ -27,7 +27,7 @@
                 <td>{{ internship.description }}</td>
                 <td>{{ internship.name }}</td>
                 <td>{{ internship.email }}</td>
-                <td><button class="btn btn-warning btn-sm" @click="editInternship(internship)"><i class="fas fa-edit"></i>Muuda</button>
+                <td>
                   <button class="btn btn-danger btn-sm" @click="deleteInternship(internship)"><i class="fas fa-trash"></i> Kustuta</button>
 
                 </td>
@@ -85,11 +85,7 @@ export default {
           });
     },
 
-    editInternship(internship) {
-      console.log("Edit internship:", internship);
-      this.modalIsOpen = true;
-      this.newInternship = { ...internship }; // Pre-fill the modal with selected internship
-    },
+
 
     deleteInternship(internship) {
       const companyUserId = sessionStorage.getItem('userId');

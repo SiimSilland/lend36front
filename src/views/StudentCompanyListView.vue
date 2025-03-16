@@ -498,6 +498,7 @@ body {
 }
 .projects .project-item .desc-row {
   color: #88909c;
+  align-content: end;
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
