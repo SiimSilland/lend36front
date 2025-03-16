@@ -19,7 +19,7 @@ export default {
     },
 
     sendPostPreferredCity(userId, cityId){
-        return axios.post('/preferred-city/city', {
+        return axios.post('/preferred-city/city', null,{
             params:{
                 userId: userId,
                 cityId: cityId

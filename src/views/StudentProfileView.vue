@@ -2,7 +2,7 @@
   <div v-if="isStudent">
     <AddCityModal
                   :modal-is-open="modalIsOpen"
-                  :cityDropdown="citiesList"
+                  :cityDropdown="cityDropdown"
                   @event-new-city-added="handleAddCity"
                   @event-close-modal="closeAddCityModal"
     />
@@ -18,7 +18,7 @@
             <div class="row">
               <PreferredCityTable
                   :preferred-cities="studentPreferredCities"
-                  :cities="citiesList"
+                  :cities="cityDropdown"
                   @event-remove-city="handleRemoveCity"
               />
             </div>
@@ -145,7 +145,12 @@ export default {
         }
       ],
 
-      citiesList: [],
+      cityDropdown: [
+        {
+         cityId: 0,
+         cityName: 0
+        }
+      ],
 
       cvFileData: {
         userId: '',
@@ -239,7 +244,7 @@ export default {
     sendGetCityList() {
       CityService.sendGetCities()
           .then(response => {
-            this.citiesList = response.data; // Array of {cityId, cityName}
+            this.cityDropdown = response.data; // Array of {cityId, cityName}
           })
           .catch(() => NavigationService.navigateToErrorView());
     },
