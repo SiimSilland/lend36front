@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="isStudent">
+    <div class="background" v-if="isStudent">
       <AddCityModal
           :modal-is-open="modalIsOpen"
           :cityDropdown="cityDropdown"
@@ -36,7 +36,7 @@
                     <!-- Description textarea is always visible -->
                     <textarea
                         v-model="studentProfile.intro"
-                        class="form-control textarea-fixed"
+                        class="textarea-fixed"
                         id="tegevusvaldkond"
                         :readonly="!isEditMode"
                     ></textarea>
@@ -52,7 +52,7 @@
               </div>
               <div class="row">
                 <h3>
-                  <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt
+                  <button  @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt
                   </button>
                 </h3>
                 <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
@@ -65,14 +65,14 @@
                                          @event-linkedin-changed="setStudentProfileLinkedin"
                 />
                 <StudentProfileTable v-else :student-profile="studentProfile"/>
-                <h3>
+
                   <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
                   </button>
 
                   <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">
                     Salvesta
                   </button>
-                </h3>
+
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@
               <div class="row">(SIIA KALENDER)</div>
             </div>
             <div class="col">
-              <h3>Tühi column</h3>
+              <h3>/</h3>
             </div>
             <div class="col">
               <ImageInput :display-cv="cvFileData" @event-new-cv-posted="sendPostCv"/>
@@ -260,7 +260,6 @@ export default {
 
     },
 
-
     sendGetCityList() {
       CityService.sendGetCities()
           .then(response => {
@@ -281,7 +280,6 @@ export default {
 
   },
 
-
   beforeMount() {
     this.getStudentProfile()
     this.getUserImage()
@@ -299,11 +297,6 @@ export default {
   background-size: cover;
   background-position: center;
   height: 100vh;
-}
-
-.company-landing-page {
-  padding: 20px;
-  color: white;
 }
 
 .title {
@@ -329,5 +322,42 @@ export default {
 
 .left-align-list ul {
   padding-left: 20px; /* Nested list indentation */
+}
+
+.btn.btn-outline-success {
+  width: 50%;
+  max-width: 200px;
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn.btn-outline-primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);  /* Slight lift on hover */
+}
+
+.textarea-fixed {
+  resize: none;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  overflow: visible;
+  background-color: rgba(255, 255, 255, 0.8); /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  margin: 10px;
+  text-align: left;
 }
 </style>
