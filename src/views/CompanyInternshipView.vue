@@ -67,14 +67,24 @@ export default {
   methods: {
 
     getInternships() {
-      axios.get('/company/internships')
+      const companyUserId = sessionStorage.getItem('userId'); // Ensure userId is retrieved
+      if (!companyUserId) {
+        console.error("Error: companyUserId is missing!");
+        return;
+      }
+
+      axios.get('/company/internships', {
+        params: { companyUserId }
+      })
           .then(response => {
-            this.internships = response.data
+            this.internships = response.data;
           })
-          .catch(() => {
-            NavigationService.navigateToErrorView()
-          })
+          .catch(error => {
+            console.error("Error fetching internships:", error.response?.data || error);
+            NavigationService.navigateToErrorView();
+          });
     },
+
     editInternship(internship) {
       console.log("Edit internship:", internship);
       this.modalIsOpen = true;
