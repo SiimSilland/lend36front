@@ -92,13 +92,23 @@ export default {
     },
 
     deleteInternship(internship) {
+      const companyUserId = sessionStorage.getItem('userId');
+
+      if (!companyUserId) {
+        console.error("Error: companyUserId is missing!");
+        return;
+      }
+
       if (confirm("Are you sure you want to delete this internship?")) {
-        axios.delete(`/company/internships/${internship.id}`)
+        axios.delete(`/company/internship/${internship.id}`, {
+          params: { companyUserId }
+        })
             .then(() => {
+              console.log("Internship deleted successfully.");
               this.getInternships(); // Refresh after delete
             })
             .catch(error => {
-              console.error("Error deleting internship:", error);
+              console.error("Error deleting internship:", error.response?.data || error);
             });
       }
     },
