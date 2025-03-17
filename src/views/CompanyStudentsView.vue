@@ -1,5 +1,7 @@
 <template>
-  <div class="background">
+  <div className="col">
+    <h1>Tudengite profiilid firmadele</h1>
+  </div><div class="background">
   <div class="container">
     <div class="content">
       <section class="sidebar">
@@ -17,17 +19,7 @@
       <section class="main-content">
         <div class="app">
           <div class="fab-icon">+</div>
-          <header class="sub-menu">
-            <div class="title">Tudengid</div>
-            <div class="user-options">
-              <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-              <div class="icon">
-                <i class="fa fa-bell-o" aria-hidden="true"></i>
-                <div class="badge">3</div>
-              </div>
 
-            </div>
-          </header>
 
           <section class="app-content">
             <header>
@@ -49,63 +41,50 @@
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                   </div>
                 </div>
-                <div class="icon"><i class="fa fa-filter" aria-hidden="true"></i></div>
-                <div class="display-group">
-                  <div class="icon"><i class="fa fa-bars" aria-hidden="true"></i></div>
-                  <div class="icon selected">
-                    <i class="fa fa-th" aria-hidden="true"></i>
-                  </div>
-                </div>
               </div>
             </header>
-
             <ul class="projects">
-              <li class="project-item" v-for="(project, index) in projects" :key="index">
-                <div class="logo-row">
-                  <img :src="project.logoSrc" :alt="project.title + ' pilt'" />
-                  <div class="icon">
-                    <i class="fa fa-ellipsis-h icon" aria-hidden="true"></i>
+              <li class="project-item" v-for="(students, index) in students" :key="index">
+
+                <div class="content-row">
+                  <!-- Left Column: Title, Address, Phone, Email, LinkedIn -->
+                  <div class="col left-column">
+                    <h3>{{ students.title }}</h3>
+                    <div class="links">
+                      <i class="fa fa-map-marker icon" aria-hidden="true"></i>
+                      <span>{{ students.address }}</span>
+                    </div>
+                    <div class="links">
+                      <i class="fa fa-phone icon" aria-hidden="true"></i>
+                      <span>{{ students.phone }}</span>
+                    </div>
+                    <div class="links">
+                      <i class="fa fa-envelope icon" aria-hidden="true"></i>
+                      <a :href="'mailto:' + students.email">{{ students.email }}</a>
+                    </div>
+                    <div class="links">
+                      <i class="fa fa-linkedin icon" aria-hidden="true"></i>
+                      <a :href="students.linkedin" target="_blank">{{ students.linkedin }}</a>
+                    </div>
+                  </div>
+
+                  <!-- Right Column: Picture and Description -->
+                  <div class="col right-column">
+                    <img :src="students.logoSrc" :alt="students.title + ' pilt'" class="student-image" />
+                    <div class="desc-row">
+                      <p>{{ students.description }}</p>
+                    </div>
                   </div>
                 </div>
-                <div class="title-row">
-                  <h3>{{ project.title }}</h3>
-                  <div class="links">
-                    <i class="fa fa-external-link icon" aria-hidden="true"></i>
-                    <a :href="project.linkedin">{{ project.linkedin }}</a>
-                  </div>
-                </div>
-                <div class="desc-row">
-                  <p>{{ project.description }}</p>
-                </div>
-                <div class="progress-row">
-                  <p
-                      class="value-label"
-                      :style="{ width: project.progress + '%' }"
-                      :data-value="project.progress"
-                  ></p>
-                  <progress
-                      max="100"
-                      :value="project.progress"
-                      :data-value="project.progress"
-                      :class="{ low: project.progress < 40 }"
-                  >
-                    {{ project.progress }}%
-                  </progress>
-                </div>
+
+                <!-- Footer Section -->
                 <div class="footer-row">
-                  <div :class="['days', project.status]">
+                  <div :class="['days', students.status]">
                     <i class="fa fa-clock-o icon" aria-hidden="true"></i>
-                    {{ project.daysLeft }} days left
-                  </div>
-                  <div class="users">
-                    <img
-                        v-for="(user, idx) in project.users"
-                        :key="idx"
-                        :src="user.avatar"
-                        :alt="user.name"
-                    />
+                    Praktika algus{{ students.daysLeft }}
                   </div>
                 </div>
+
               </li>
             </ul>
           </section>
@@ -113,7 +92,7 @@
       </section>
     </div>
   </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -121,149 +100,108 @@ export default {
   name: "CompanyStudentsView",
   data() {
     return {
-      projects: [
+      students: [
         {
           title: "Peeter Põder",
           piltSrc: "https://source.unsplash.com/48x48/?brands",
+          address: "Metsa 13, Tallinn",
+          phone: 372592323323,
+          email: "Peeter.poder@mail.ee",
           linkedin: "linkedin.com/in/peeter-poder",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 94,
-          daysLeft: 2,
-          status: "danger",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          description: "Olen kirglik IT-arendaja, kellel on tugev taust tarkvaraarenduses ja süsteemi optimeerimises. Mul on põhjalikud teadmised frontend- ja backend-tehnoloogiates, sealhulgas JavaScript (Vue.js, React), Java, Spring Boot, Node.js ja SQL/NoSQL andmebaasid. Fookus on skaleeritavate ja tõhusate lahenduste loomisel, järgides parimaid tarkvaraarenduse praktikaid",
+          daysLeft: "25.07.2025",
         },
         {
-          title: "Juhan Aas",
-          piltSrc: "https://source.unsplash.com/48x48/?brand",
-          linkedin: "linkedin.com/in/juhan-aas",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 64,
-          daysLeft: 4,
-          status: "warning",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Katrin Kuusk",
+          piltSrc: "https://source.unsplash.com/48x48/?developer",
+          address: "Tamme 8, Tartu",
+          phone: 37255667892,
+          email: "katrin.kuusk@gmail.com",
+          linkedin: "linkedin.com/in/katrin-kuusk",
+          description: "Olen spetsialiseerunud front-end arendusele ja UX/UI disainile. Minu tugevusteks on React.js, TypeScript ja kasutajakogemuse analüüs. Armastan luua intuitiivseid ja ligipääsetavaid kasutajaliideseid.",
+          daysLeft: "12.08.2025"
         },
         {
-          title: "Mari Mets",
-          piltSrc: "https://source.unsplash.com/48x48/?icon",
-          linkedin: "linkedin.com/in/mari-mets",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 59,
-          daysLeft: 5,
-          status: "warning",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Rasmus Põld",
+          piltSrc: "https://source.unsplash.com/48x48/?technology",
+          address: "Pärna 15, Pärnu",
+          phone: 37253423456,
+          email: "rasmus.pold@outlook.com",
+          linkedin: "linkedin.com/in/rasmus-pold",
+          description: "Mul on põhjalikud teadmised DevOps ja pilvetehnoloogiates, sealhulgas AWS, Docker ja Kubernetes. Olen töötanud suuremahuliste süsteemide optimeerimise ja CI/CD protsesside automatiseerimisega.",
+          daysLeft: "05.09.2025"
         },
         {
-          title: "Lea Ots",
-          logoSrc: "https://source.unsplash.com/48x48/?adventure",
-          linkedin: "linkedin.com/in/lea-ots",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 94,
-          daysLeft: 7,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Laura Laan",
+          piltSrc: "https://source.unsplash.com/48x48/?tech",
+          address: "Kase 21, Viljandi",
+          phone: 37252178654,
+          email: "laura.laan@mail.ee",
+          linkedin: "linkedin.com/in/laura-laan",
+          description: "Olen mobiilirakenduste arendaja, kelle põhitehnoloogiad on Flutter ja React Native. Loon kaasaegseid ja kasutajasõbralikke lahendusi nii iOS-i kui Androidi jaoks.",
+          daysLeft: "28.10.2025"
         },
         {
-          title: "Regular Logistics",
-          logoSrc: "https://source.unsplash.com/48x48/?flower",
-          website: "regularlogistics.com",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 44,
-          daysLeft: 9,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Andres Kask",
+          piltSrc: "https://source.unsplash.com/48x48/?coding",
+          address: "Rukkilille 7, Narva",
+          phone: 37255689923,
+          email: "andres.kask@hotmail.com",
+          linkedin: "linkedin.com/in/andres-kask",
+          description: "Spetsialiseerun backend-arendusele ja suurandmete töötlemisele. Kasutan Pythonit ja Node.js-i skaleeritavate API-de ja mikroteenuste loomiseks.",
+          daysLeft: "18.06.2025"
         },
         {
-          title: "Foursquare Agency",
-          logoSrc: "https://source.unsplash.com/48x48/?brands",
-          website: "foursquareagency.com",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 39,
-          daysLeft: 11,
-          status: "danger",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Kertu Maasikas",
+          piltSrc: "https://source.unsplash.com/48x48/?software",
+          address: "Võsa 10, Tartu",
+          phone: 37259981234,
+          email: "kertu.maasikas@gmail.com",
+          linkedin: "linkedin.com/in/kertu-maasikas",
+          description: "Olen kogenud Java ja Spring Boot arendaja, kes loob skaleeritavaid ja turvalisi veebirakendusi. Olen töötanud ka e-kaubanduse ja pangandustarkvara arendusega.",
+          daysLeft: "14.07.2025"
         },
         {
-          title: "Piece Studio",
-          logoSrc: "https://source.unsplash.com/48x48/?r",
-          website: "piecestudio.com",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 34,
-          daysLeft: 12,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Martin Susi",
+          piltSrc: "https://source.unsplash.com/48x48/?programmer",
+          address: "Lille 5, Pärnu",
+          phone: 37258873456,
+          email: "martin.susi@outlook.com",
+          linkedin: "linkedin.com/in/martin-susi",
+          description: "Minu eriala on küberturvalisus ja andmekaitse. Olen keskendunud veebirakenduste haavatavuste tuvastamisele ja süsteemi turvalisuse tagamisele.",
+          daysLeft: "22.08.2025"
         },
         {
-          title: "Legacy Foundation",
-          logoSrc: "https://source.unsplash.com/48x48/?sanfrancisco",
-          website: "legacyfoundation.com",
-          description: "Web resource which contains all about transfer in the world of sports.",
-          progress: 32,
-          daysLeft: 12,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Liis Pärt",
+          piltSrc: "https://source.unsplash.com/48x48/?developer",
+          address: "Männi 12, Tallinn",
+          phone: 37253366578,
+          email: "liis.part@mail.ee",
+          linkedin: "linkedin.com/in/liis-part",
+          description: "Olen SQL ja NoSQL andmebaaside spetsialist. Tegelen suuremahuliste andmete analüüsimise ja optimeerimisega, kasutades PostgreSQL-i ja MongoDB-d.",
+          daysLeft: "03.11.2025"
         },
         {
-          title: "Sports Analytics",
-          logoSrc: "https://source.unsplash.com/48x48/?sports",
-          website: "sportsanalytics.com",
-          description: "Analytics platform for sports data and performance tracking.",
-          progress: 78,
-          daysLeft: 5,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Karl Rõigas",
+          piltSrc: "https://source.unsplash.com/48x48/?tech",
+          address: "Kaunase pst 19, Narva",
+          phone: 37251244321,
+          email: "karl.roigas@gmail.com",
+          linkedin: "linkedin.com/in/karl-roigas",
+          description: "Olen spetsialiseerunud tehisintellekti ja masinõppe lahendustele. Kasutan TensorFlow-d ja PyTorch-i, et töötada välja nutikaid süsteeme, mis suudavad suurt hulka andmeid analüüsida ja prognoose teha.",
+          daysLeft: "29.09.2025"
         },
         {
-          title: "Tech Innovators",
-          logoSrc: "https://source.unsplash.com/48x48/?tech",
-          website: "techinnovators.com",
-          description: "Leading platform for technology innovation and development.",
-          progress: 25,
-          daysLeft: 1,
-          status: "danger",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
-        },
-        {
-          title: "Global Solutions",
-          logoSrc: "https://source.unsplash.com/48x48/?global",
-          website: "globalsolutions.com",
-          description: "International business solutions and consulting services.",
-          progress: 67,
-          daysLeft: 8,
-          status: "",
-          users: [
-            { name: "User 1", avatar: "https://source.unsplash.com/24x24/?human" },
-            { name: "User 2", avatar: "https://source.unsplash.com/24x24/?humans" }
-          ]
+          title: "Anneli Jõgi",
+          piltSrc: "https://source.unsplash.com/48x48/?coding",
+          address: "Rohu 24, Viljandi",
+          phone: 37254781234,
+          email: "anneli.jogi@outlook.com",
+          linkedin: "linkedin.com/in/anneli-jogi",
+          description: "Mul on lai kogemus veebirakenduste arenduses, kasutades Angularit ja NestJS-i. Panustan meeskonna edusse läbi kvaliteetse koodi ja hästi struktureeritud arhitektuuri.",
+          daysLeft: "10.10.2025"
+
+
         }
       ]
     };
@@ -277,7 +215,13 @@ body {
   background: #bbc3c9;
   text-align: center;
 }
-
+h1 {
+  margin-top: -10px; /* Moves title upwards */
+  text-align: center;
+}
+.container {
+  margin-top: 10px; /* Moves the whole container down by 2cm */
+}
 .love-text {
   margin-top: 20px;
   color: #fafbfb;
@@ -287,14 +231,89 @@ body {
   font-size: 0.75em;
   color: #d32f2f;
 }
+.content-row {
+  display: flex;
+  width: 100%;
+  margin-top: -10px; /* Moves the whole row up */
+}
 
+.left-column {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  font-size: small;
 
- .background {
-   background-image: url('@/assets/img.png');
-   background-size: cover;
-   background-position: center;
-   height: 100vh;
- }
+}
+
+.right-column {
+  flex: 2;
+  padding: 10px;
+  margin-top: -1px; /* Moves content up */
+}
+.content-row {
+  display: flex;
+  justify-content: space-between; /* Ensures both columns align properly */
+  align-items: flex-start; /* Aligns text and image at the top */
+  width: 100%;
+  padding: 10px;
+  gap: 20px; /* Space between left and right column */
+}
+
+.left-column {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+}
+
+.left-column h3 {
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.links i {
+  margin-right: 8px; /* Space between icon and text */
+  color: #0068ff; /* Make it visually distinct */
+}
+
+.right-column {
+  flex: 2;
+  padding: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-column img.student-image {
+  max-width: 120px; /* Adjust as needed */
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Space between image and description */
+}
+
+.desc-row {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.title-row {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  margin-top: -50px;
+}
+
+.background {
+  background-image: url('@/assets/img.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
 
 .main-content {
   width: 100%;
@@ -518,6 +537,7 @@ body {
   justify-content: flex-start;
   margin: 20px 0 10px;
 }
+
 .projects .project-item .title-row h3 {
   font-weight: bold;
   margin-top: 0;
@@ -540,6 +560,7 @@ body {
 .projects .project-item .desc-row {
   color: #88909c;
   font-size: 12px;
+  align-content: end;
   font-weight: 400;
   line-height: 18px;
 }
@@ -610,7 +631,45 @@ body {
   border-radius: 3px;
   margin: 0 2px;
 }
+.content-row {
+  display: flex;
+  width: 100%;
+}
 
+.left-column {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+}
+
+.right-column {
+  flex: 2;
+  padding: 10px;
+}
+
+.title-row {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 5px 0;
+}
+
+.logo-row {
+  display: flex;
+  justify-content: space-between; /* Pushes items to opposite ends */
+  align-items: center;
+  padding: 10px;
+}
+
+.logo-row img {
+  order: 1; /* Ensures image comes after the ellipsis icon */
+}
 .fab-icon {
   position: absolute;
   z-index: 1000;
