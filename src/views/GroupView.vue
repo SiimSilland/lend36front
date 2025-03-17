@@ -3,12 +3,14 @@
     <AddGroupModal :modal-is-open="modalIsOpen"
                    @event-group-added="getGroups"
                    @event-close-modal="closeAddGroupModal"
+                   @event-group-deleted="deleteGroup"
     />
 
     <div class="container text-center">
       <div class="row justify-content-center">
         <div class="col">
           <h1>Kõik lennud</h1>
+          <AlertDanger :message="errorMessage"/>
           <table class="table table-responsive table-hover">
             <thead>
             <tr>
@@ -25,7 +27,7 @@
               <td>{{ group.groupPeriod }}</td>
               <td>{{group.lectorName}}</td>
               <td><button class="btn btn-warning btn-sm" @click="editGroup(group)"><i class="fas fa-edit"></i>Muuda</button>
-                <button class="btn btn-danger btn-sm" @click="deleteGroup(group)"><i class="fas fa-trash"></i> Kustuta</button>
+                <button class="btn btn-danger btn-sm" @click="deleteGroup(group.groupId)"><i class="fas fa-trash"></i> Kustuta</button>
                 <button class="btn btn-success btn-sm" @click="navigateToGroupEmailView(group.groupId)"><i class="fas fa-plus"></i> Lisa õppur</button>
               </td>
             </tr>
@@ -48,14 +50,16 @@ import NavigationService from "@/services/NavigationService";
 import GroupService from "@/services/GroupService";
 import BusinessErrors from "@/errors/BusinessErrors";
 import HttpStatusCodes from "@/errors/HttpStatusCodes";
+import AlertDanger from "@/components/alert/AlertDanger.vue";
 
 export default {
   name: 'GroupView',
-  components: {AddGroupModal},
+  components: {AlertDanger, AddGroupModal},
   data() {
     return {
       modalIsOpen: false,
       isEdit: false,
+      isDelete: Boolean,
       successMessage: '',
       errorMessage: '',
 
@@ -102,6 +106,31 @@ export default {
       this.modalIsOpen = false
     },
 
+    deleteGroup(groupId) {
+      GroupService.sendDeleteGroupRequest(groupId)
+          .then(() => this.handleDeleteGroupResponse())
+          .catch(error => this.handleErrorResponse(error))
+    },
+
+    handleDeleteGroupResponse() {
+      this.getGroups()
+    },
+
+    handleErrorResponse(error) {
+      this.errorResponse = error.response.data
+
+      if (this.errorResponse.errorCode === BusinessErrors.GROUP_NOT_EMPTY) {
+        this.errorMessage = this.errorResponse.message
+        setTimeout(this.resetErrorMessage, 4000)
+      } else {
+        NavigationService.navigateToErrorView();
+      }
+    },
+
+    resetErrorMessage() {
+      this.errorMessage = ''
+    },
+
   },
 
 
@@ -111,3 +140,5 @@ export default {
   }
 }
 </script>
+
+
