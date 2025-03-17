@@ -1,9 +1,15 @@
 <template>
-  <div class="background">
-<div v-if="isStudent">
+
+  <div class="background" v-if="isStudent">
+    <AddCityModal
+        :modal-is-open="modalIsOpen"
+        :cityDropdown="cityDropdown"
+        @event-new-city-added="handleAddCity"
+        @event-close-modal="closeAddCityModal"
+    />
     <div class="row">
       <div class="col">
-        <h1> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
+        <h1 class="title"> {{ studentProfile.firstName }} {{ studentProfile.lastName }}</h1>
       </div>
     </div>
     <div>
@@ -17,10 +23,28 @@
                   @event-remove-city="handleRemoveCity"
               />
             </div>
+            <div class="row">
+              <button @click="openAddCityModal" type="submit" class="btn btn-outline-success">Lisa asukohti</button>
+            </div>
+
           </div>
           <div class="col">
-            <div class="row">Lühitutvustus</div>
-            <div class="row">(SIIA LÜHITUTVUSTUS)</div>
+            <div class="row">
+              <div class="col-md-30">
+                <label for="Lühitutvustus" class="form-label label-black-bold">Lühitutvustus</label>
+                <div class="form-floating">
+                  <!-- Description textarea is always visible -->
+                  <textarea
+                      v-model="studentProfile.intro"
+                      class="textarea-fixed"
+                      id="tegevusvaldkond"
+                      :readonly="!isEditMode"
+                  ></textarea>
+                </div>
+              </div>
+
+
+            </div>
           </div>
           <div class="col">
             <div class="row">
@@ -28,7 +52,8 @@
             </div>
             <div class="row">
               <h3>
-                <button @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt</button>
+                <button  @click="sendDeleteUserImage" type="button" class="btn btn-outline-primary">kustuta pilt
+                </button>
               </h3>
               <ImageInput :user-image="userImageDto" @event-new-image-posted="sendPostUserImage"/>
             </div>
@@ -40,19 +65,19 @@
                                        @event-linkedin-changed="setStudentProfileLinkedin"
               />
               <StudentProfileTable v-else :student-profile="studentProfile"/>
-              <h3>
-                <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
-                </button>
 
-                <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">Salvesta
-                </button>
-              </h3>
+              <button v-if="!isEditMode" @click="startEdit" type="button" class="btn btn-outline-success me-3">Muuda
+              </button>
+
+              <button v-if="isEditMode" @click="saveEdit" type="button" class="btn btn-outline-success me-3">
+                Salvesta
+              </button>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-</div>
     <div>
       <div class="container text-center">
         <div class="row align-items-start">
@@ -61,7 +86,7 @@
             <div class="row">(SIIA KALENDER)</div>
           </div>
           <div class="col">
-            <h3>Tühi column</h3>
+            <h3>/</h3>
           </div>
           <div class="col">
             <ImageInput :display-cv="cvFileData" @event-new-cv-posted="sendPostCv"/>
@@ -73,8 +98,12 @@
 
     </div>
   </div>
-  <h2> Juurdepääs keelatud </h2>
-  <p>Teil pole selle lehe vaatamiseks õiguse.</p>
+
+  <div v-else class="unauthorized-message">
+    <h2> Juurdepääs keelatud </h2>
+    <p>Teil pole selle lehe vaatamiseks õiguse.</p>
+  </div>
+
 </template>
 <script>
 
@@ -88,10 +117,12 @@ import ImageInput from "@/components/image/ImageInput.vue";
 import UserImageService from "@/services/UserImageService";
 import PreferredCityService from "@/services/PreferredCityService";
 import CityService from "@/services/CityService";
+import AddCityModal from "@/components/modal/AddCityModal.vue";
 
 export default {
   name: 'StudentProfileView',
   components: {
+    AddCityModal,
     ImageInput,
     UserImage,
     PreferredCityTable,
@@ -109,6 +140,7 @@ export default {
       isEditMode: false,
       userId: Number(sessionStorage.getItem('userId')),
       isStudent: true,
+      modalIsOpen: false,
       cityName: '',
 
       studentProfile: {
@@ -117,7 +149,8 @@ export default {
         address: '',
         phone: '',
         linkedin: '',
-        email: ''
+        email: '',
+        intro: ''
       },
 
       userImageDto: {
@@ -132,7 +165,12 @@ export default {
         }
       ],
 
-      cityDropdown: [],
+      cityDropdown: [
+        {
+          cityId: 0,
+          cityName: 0
+        }
+      ],
 
       cvFileData: {
         userId: '',
@@ -207,6 +245,21 @@ export default {
           });
     },
 
+    handleAddCity(cityId) {
+      PreferredCityService.sendPostPreferredCity(this.userId, cityId)
+          .then(() => {
+                this.getStudentPreferredCities();
+                this.closeAddCityModal();
+
+              }
+          )
+          .catch(error => {
+            console.error('Error adding city', error);
+            alert('Linna lisamisel tekkis viga');
+          })
+
+    },
+
     sendGetCityList() {
       CityService.sendGetCities()
           .then(response => {
@@ -214,8 +267,18 @@ export default {
           })
           .catch(() => NavigationService.navigateToErrorView());
     },
-  },
 
+    openAddCityModal() {
+      this.modalIsOpen = true
+
+    },
+
+    closeAddCityModal() {
+      this.modalIsOpen = false
+    }
+
+
+  },
 
   beforeMount() {
     this.getStudentProfile()
@@ -230,9 +293,71 @@ export default {
 
 <style scoped>
 .background {
-  background-image: url('@/assets/img.png');
+  background-image: url('@/assets/img.png'); /* Use require() if needed */
   background-size: cover;
   background-position: center;
   height: 100vh;
+}
+
+.title {
+  color: black; /* Change the heading color to black */
+}
+
+/* Style for text boxes */
+.text-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  margin: 10px;
+  text-align: left; /* Aligns text to the left */
+}
+
+/* Align lists to the left */
+.left-align-list {
+  text-align: left;
+  padding-left: 20px; /* Adjust for better indentation */
+  list-style-type: disc; /* Ensures bullets appear */
+}
+
+.left-align-list ul {
+  padding-left: 20px; /* Nested list indentation */
+}
+
+.btn.btn-outline-success {
+  width: 50%;
+  max-width: 200px;
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn.btn-outline-primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);  /* Slight lift on hover */
+}
+
+.textarea-fixed {
+  resize: none;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  overflow: visible;
+  background-color: rgba(255, 255, 255, 0.8); /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  margin: 10px;
+  text-align: left;
 }
 </style>
